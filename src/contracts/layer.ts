@@ -2,7 +2,7 @@ import type { ReactNode } from 'react';
 import type { Hex, Theme } from './theme';
 import type { DynamicLayerFactory } from './dynamic';
 
-export type AtmosphereId = 'A01' | 'A02' | 'A03' | 'A04' | 'A06' | 'A08' | 'A10' | 'A11' | 'A12' | 'A13' | 'A14';
+export type AtmosphereId = 'A01' | 'A02' | 'A03' | 'A04' | 'A06' | 'A08' | 'A10' | 'A11' | 'A12' | 'A13' | 'A14' | 'A15' | 'A16' | 'A17' | 'A18' | 'A19';
 export type GlassId = 'G01' | 'G02' | 'G03' | 'G04' | 'G05' | 'G06' | 'G07' | 'G08';
 export type LayerKind = 'atmosphere' | 'glass' | 'texture';
 

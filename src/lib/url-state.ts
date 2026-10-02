@@ -2,6 +2,10 @@ import { useCallback, useMemo, useSyncExternalStore } from 'react';
 import type {
   AtmosphereId, GalleryTab, GlassId, LabState, Mode, Motion, PaletteId, RegFilter, TemplateId, TypeId, ViewId,
 } from '../contracts';
+import { PALETTES } from '../data/palettes';
+import { TYPE_SYSTEMS } from '../data/typography';
+import { ATMOSPHERE_META } from '../data/atmospheres';
+import { GLASS_META } from '../data/glass';
 
 /** Defaults: dirección D-D de la spec (plan §4.6). */
 export const DEFAULT_STATE: LabState = {
@@ -11,11 +15,6 @@ export const DEFAULT_STATE: LabState = {
 
 const oneOf = <T extends string>(v: string | null, list: readonly T[], d: T): T =>
   v !== null && (list as readonly string[]).includes(v) ? (v as T) : d;
-const idIn = <T extends string>(v: string | null, re: RegExp, max: number, d: T, min = 1): T => {
-  if (v === null || !re.test(v)) return d;
-  const n = Number(v.slice(1));
-  return n >= min && n <= max ? (v as T) : d;
-};
 const num = (v: string | null, min: number, max: number): number | null => {
   if (v === null || v.trim() === '') return null;
   const n = Number(v);
@@ -32,10 +31,10 @@ export function parseState(search: string, env: { reducedMotion: boolean }): Lab
   const id = q.get('id');
   return {
     view: oneOf<ViewId>(q.get('view'), ['combinador', 'galerias', 'ficha'], d.view),
-    palette: idIn<PaletteId>(q.get('c'), /^C\d\d$/, 22, d.palette),
-    type: idIn<TypeId>(q.get('t'), /^T\d\d$/, 14, d.type, 0),
-    atmosphere: idIn<AtmosphereId>(q.get('a'), /^A\d\d$/, 14, d.atmosphere),
-    glass: idIn<GlassId>(q.get('g'), /^G\d\d$/, 10, d.glass),
+    palette: oneOf<PaletteId>(q.get('c'), PALETTES.map((x) => x.id), d.palette),
+    type: oneOf<TypeId>(q.get('t'), TYPE_SYSTEMS.map((x) => x.id), d.type),
+    atmosphere: oneOf<AtmosphereId>(q.get('a'), ATMOSPHERE_META.map((x) => x.id), d.atmosphere),
+    glass: oneOf<GlassId>(q.get('g'), GLASS_META.map((x) => x.id), d.glass),
     mode: oneOf<Mode>(q.get('m'), ['light', 'dark'], d.mode),
     motion,
     speed: sp !== null && Number.isInteger(sp * 4) ? sp : d.speed,

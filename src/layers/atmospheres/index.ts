@@ -13,11 +13,17 @@ import * as A11 from './A11-rejilla/static'; import { paint as p11 } from './A11
 import * as A12 from './A12-manchas/static'; import { paint as p12 } from './A12-manchas/paint';
 import * as A13 from './A13-tipografia/static'; import { paint as p13 } from './A13-tipografia/paint';
 import * as A14 from './A14-datos/static'; import { paint as p14 } from './A14-datos/paint';
+import * as A15 from './A15-marea/static'; import { paint as p15 } from './A15-marea/paint';
+import * as A16 from './A16-plancton/static'; import { paint as p16 } from './A16-plancton/paint';
+import * as A17 from './A17-cortina/static'; import { paint as p17 } from './A17-cortina/paint';
+import * as A18 from './A18-resplandor/static'; import { paint as p18 } from './A18-resplandor/paint';
+import * as A19 from './A19-esfera/static'; import { paint as p19 } from './A19-esfera/paint';
 
 type Mod = { renderStatic: (t: Theme, o: StaticOpts) => ReactNode; css: () => string };
 const PARTS: Record<AtmosphereId, [Mod, AtmosphereLayer['paint']]> = {
   A01: [A01, p01], A02: [A02, p02], A03: [A03, p03], A04: [A04, p04], A06: [A06, p06],
   A08: [A08, p08], A10: [A10, p10], A11: [A11, p11], A12: [A12, p12], A13: [A13, p13], A14: [A14, p14],
+  A15: [A15, p15], A16: [A16, p16], A17: [A17, p17], A18: [A18, p18], A19: [A19, p19],
 };
 
 export const ATMOSPHERES: readonly AtmosphereLayer[] = ATMOSPHERE_META.map((m) => {

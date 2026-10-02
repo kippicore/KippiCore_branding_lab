@@ -2,16 +2,20 @@ import { describe, expect, it } from 'vitest';
 import type { LabState } from '../contracts';
 import { comboCode, DEFAULT_STATE, parseState, serializeState } from './url-state';
 import { mulberry32 } from './prng';
+import { PALETTES } from '../data/palettes';
+import { TYPE_SYSTEMS } from '../data/typography';
+import { ATMOSPHERE_META } from '../data/atmospheres';
+import { GLASS_META } from '../data/glass';
 
 const pad = (n: number): string => String(n).padStart(2, '0');
 const randomState = (rnd: () => number): LabState => {
   const pick = <T,>(a: readonly T[]): T => a[Math.floor(rnd() * a.length)]!;
   return {
     view: pick(['combinador', 'galerias', 'ficha'] as const),
-    palette: `C${pad(1 + Math.floor(rnd() * 22))}` as LabState['palette'],
-    type: `T${pad(Math.floor(rnd() * 15))}` as LabState['type'],
-    atmosphere: `A${pad(1 + Math.floor(rnd() * 14))}` as LabState['atmosphere'],
-    glass: `G${pad(1 + Math.floor(rnd() * 10))}` as LabState['glass'],
+    palette: pick(PALETTES).id,
+    type: pick(TYPE_SYSTEMS).id,
+    atmosphere: pick(ATMOSPHERE_META).id,
+    glass: pick(GLASS_META).id,
     mode: pick(['light', 'dark'] as const),
     motion: pick(['static', 'dynamic'] as const),
     speed: pick([0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2]),
