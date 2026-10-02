@@ -1,1 +1,3 @@
-/* pendiente: P4 */
+/* Base común de los vidrios G01–G10 (spec §4.1). */
+.kc-glass { position: relative; isolation: isolate; border-radius: 18px; color: var(--kc-ink); }
+.kc-glass > * { position: relative; z-index: 2; }

@@ -1,2 +1,51 @@
-// pendiente: P2
-export {};
+import type { AtmosphereId } from '../contracts';
+
+export interface AtmosphereMeta {
+  id: AtmosphereId; name: string; subtitle: string; reg: number | null; weight: number;
+  description: string; staticRecipe: string; dynamicNote: string;
+}
+
+export const ATMOSPHERE_META: readonly AtmosphereMeta[] = [
+  { id: 'A01', name: 'Aurora', subtitle: 'X01', reg: null, weight: 0.35, description: 'Luz difusa que entra por un lado y deja el otro en sombra. Profunda, calmada, con dirección.',
+    staticRecipe: 'bg · luz(78,28,78,accent,.9) · luz(58,78,62,mix(accent,primary,.45),.55) · luz(98,96,60,primary,.95) · luz(30,40,50,mix(bg,accent,.85),.6). El lado izquierdo queda en sombra: ahí va el texto.',
+    dynamicNote: 'Las luces derivan despacio (translate ±6 %, scale .95–1.08, 18–27 s, alternate, desfasadas).' },
+  { id: 'A02', name: 'Malla de gradiente', subtitle: 'Mesh', reg: null, weight: 0.7, description: 'Cuatro colores que se funden de esquina a esquina, sin bordes. Versátil y limpio.',
+    staticRecipe: 'base mix(primary,accent,.5) · luz(0,0,130,primary,1) · luz(100,0,120,accent,1) · luz(0,100,120,mix(primary,bg,.5),1) · luz(100,100,130,mix(accent,primary,.4),1).',
+    dynamicNote: 'Cuatro puntos de control que orbitan (WebGL) o luces CSS que derivan.' },
+  { id: 'A03', name: 'Gradiente con grano', subtitle: 'Grainy', reg: null, weight: 0.6, description: 'La malla con un grano fuerte encima, como impresión o fotografía analógica.',
+    staticRecipe: 'luz(15,20,110,primary,1) · luz(85,25,100,accent,.95) · luz(60,95,110,mix(accent,primary,.5),.9) + ruido feTurbulence (baseFrequency .75, 3 octavas) con mix-blend-mode: overlay, α .9.',
+    dynamicNote: 'Deriva de luces + grano vivo (saltos de 80–120 ms con steps()).' },
+  { id: 'A04', name: 'Bokeh', subtitle: 'Lente', reg: null, weight: 0.3, description: 'Puntos de luz desenfocados, como luces de ciudad vistas a través de una lente abierta.',
+    staticRecipe: 'luz(70,60,90,mix(accent,bg,.35),.6) + 16 discos de 6–22 % con borde semiduro (color 0 52%, transparent 70%), α .25–.75, colores rotando accent / primary / mix. Semilla fija.',
+    dynamicNote: 'Flotación vertical lenta + respiración de enfoque (blur 0→3 px) desfasada por disco.' },
+  { id: 'A05', name: 'Bioluminiscencia', subtitle: 'Noche', reg: null, weight: 0.2, description: 'Fondo casi negro con pequeñas luces que flotan y brillan, como plancton luminoso.',
+    staticRecipe: 'bg (en oscuro, 30–40 % hacia negro) · luz(40,70,90,mix(accent,bg,.25),.7) + 34 partículas: núcleo 0–8 %, halo 45 % α hasta 14 %, tamaño 1.2–3.6 %; 1 de cada 4 en primary.',
+    dynamicNote: 'Partículas con deriva por campo de ruido, pulso senoidal y líneas de sinapsis. Atmósfera insignia.' },
+  { id: 'A06', name: 'Haz de luz', subtitle: 'Volumétrico', reg: null, weight: 0.25, description: 'Un rayo de luz en diagonal desde arriba, como en un escenario. Dramático y elegante.',
+    staticRecipe: 'conic-gradient(from 145deg at 12% -6%, transparent 0deg, accent·55% 10deg, mix(accent,primary)·35% 22deg, transparent 38deg), blur(28px), inset −20% · luz(55,105,90,primary,.55) · luz(20,8,40,accent,.5).',
+    dynamicNote: 'El haz oscila ±4° (20 s) y flotan partículas de polvo dentro del cono.' },
+  { id: 'A07', name: 'Eclipse', subtitle: 'Corona', reg: null, weight: 0.25, description: 'Un disco oscuro con un anillo de luz detrás, como la corona solar. Centro natural para el logo.',
+    staticRecipe: 'Anillo radial (transparent 0–36 %, accent 40 %, mix·70 % 47 %, transparent 66 %) blur 14 px en (68 %,50 %), tamaño 58 %; disco bg de 30 % con filo 1 px accent·40 %; luz(100,100,50,primary,.45).',
+    dynamicNote: 'La corona respira (scale 1→1.04) y llamaradas cónicas giran (90 s/vuelta).' },
+  { id: 'A08', name: 'Seda líquida', subtitle: 'Ondas', reg: null, weight: 0.5, description: 'Bandas de color que se curvan y se cruzan, como seda en movimiento.',
+    staticRecipe: 'SVG 400×300 con 3 curvas Bézier de grosor 70 / 50 / 60 en primary / accent / mix, feGaussianBlur 16.',
+    dynamicNote: 'Las curvas ondulan (morph de puntos de control) o flow field en WebGL.' },
+  { id: 'A09', name: 'Horizonte', subtitle: 'Atardecer', reg: null, weight: 0.45, description: 'Un cielo que se calienta hacia el horizonte con un sol bajo y difuso.',
+    staticRecipe: 'linear-gradient(180deg, bg 0%, mix(primary,bg,.35) 62%, mix(accent,primary,.5) 100%) · sol luz(72,80,46,accent,1) + núcleo luz(72,80,16,mix(accent,#FFF,.6),.9) · horizonte 1 px accent·60 % al 80 %.',
+    dynamicNote: 'El sol sube o baja en un ciclo de 60 s y el cielo cambia de temperatura.' },
+  { id: 'A10', name: 'Plasma duotono', subtitle: 'Fusión', reg: null, weight: 0.6, description: 'Dos colores que se funden y producen un tercero donde se tocan.',
+    staticRecipe: 'Dos luces grandes primary (38,46,80) y accent (66,56,78) con mix-blend-mode screen en oscuro / multiply en claro · luz(85,10,40,mix,.6).',
+    dynamicNote: 'Las dos luces orbitan una alrededor de la otra (40 s).' },
+  { id: 'A11', name: 'Rejilla iluminada', subtitle: 'Tech', reg: null, weight: 0.25, description: 'Una cuadrícula fina que solo se ve donde cae la luz.',
+    staticRecipe: 'Cuadrícula de 44 px en ink·14 % con máscara radial en (65 %,40 %) · luz(65,40,70,accent,.55) · luz(95,95,50,primary,.5).',
+    dynamicNote: 'La máscara y la luz siguen al cursor (spotlight) y deambulan solas sin puntero.' },
+  { id: 'A12', name: 'Manchas', subtitle: 'Original', reg: null, weight: 0.55, description: 'Manchas de color nítidas del laboratorio original; muestran cómo cada vidrio deforma formas definidas.',
+    staticRecipe: '4 círculos nítidos (blur 6 px): primary 52 % en (46,−22), accent 40 % en (68,42), mix(primary,accent) 34 % en (2,46), mix(accent,bg,.7) 22 % en (30,4).',
+    dynamicNote: 'Deriva lenta (16–25 s).' },
+  { id: 'A13', name: 'Tipografía', subtitle: 'Original', reg: null, weight: 0.55, description: 'Texto grande detrás del vidrio: la mejor prueba para acanalado y grabado.',
+    staticRecipe: 'Tres líneas gigantes (17vw, 700, tracking −0.05em): «KippiCore» en primary, «sistemas» en accent, «a la medida» en ink.',
+    dynamicNote: 'Marquesina muy lenta (30 s, alternate).' },
+  { id: 'A14', name: 'Datos', subtitle: 'Original', reg: null, weight: 0.5, description: 'Barras y líneas de un tablero detrás del vidrio, como una pantalla de producto real.',
+    staticRecipe: 'SVG con 16 barras (primary, cada cuarta en accent), una polilínea accent de 4 px y un círculo accent.',
+    dynamicNote: 'El gráfico se actualiza con datos de ejemplo cada pocos segundos (600 ms).' },
+];

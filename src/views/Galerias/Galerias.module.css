@@ -1,1 +1,27 @@
-/* pendiente: P6 */
+.page { display: grid; gap: 16px; }
+.bar { display: flex; flex-wrap: wrap; gap: 16px; align-items: center; justify-content: space-between; }
+.filter { display: flex; align-items: center; gap: 10px; }
+.filter select { width: auto; min-width: 150px; }
+.count { font-size: 13px; color: var(--ui-muted); }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); gap: 20px; }
+.card { display: flex; flex-direction: column; background: var(--ui-panel); border: 1px solid var(--ui-hair); border-radius: 14px; overflow: hidden; box-shadow: var(--ui-shadow); }
+.preview { border-bottom: 1px solid var(--ui-hair); }
+.body { display: grid; gap: 10px; padding: 16px; flex: 1; align-content: start; }
+.cardHead { display: flex; align-items: baseline; gap: 10px; }
+.cardHead h3 { font-size: 15px; font-weight: 600; line-height: 1.3; }
+.cardId { color: var(--ui-muted); }
+.desc { font-size: 13px; color: var(--ui-muted); line-height: 1.5; }
+.flags { display: flex; flex-wrap: wrap; gap: 6px; }
+.actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px; }
+.specimen { display: grid; gap: 8px; padding: 18px; min-height: 170px; background: var(--kc-bg); color: var(--kc-ink); font-family: var(--kc-font-text); align-content: center; }
+.specLabel { font-family: var(--kc-font-mono); font-size: 11px; text-transform: uppercase; letter-spacing: var(--kc-label-tracking); color: var(--kc-muted); }
+.specHead { font-family: var(--kc-font-display); font-weight: var(--kc-display-weight); letter-spacing: var(--kc-display-tracking); text-transform: var(--kc-display-transform); font-size: 24px; line-height: 1.12; text-wrap: balance; }
+.specText { font-size: 13px; color: var(--kc-muted); line-height: 1.5; }
+.swatches { display: grid; }
+.swatchRow { display: grid; grid-template-columns: repeat(6, 1fr); height: 64px; }
+.mini { position: relative; display: block; aspect-ratio: 16 / 10; overflow: hidden; background: var(--kc-bg); container-type: inline-size; }
+.miniInner { position: absolute; inset: 0; }
+.glassPos { position: absolute; inset: 0; display: grid; place-items: center; padding: 14%; }
+.glassBox { padding: 12px 14px; width: 100%; color: var(--kc-ink); font-family: var(--kc-font-text); }
+.glassTitle { font-family: var(--kc-font-display); font-weight: var(--kc-display-weight); font-size: 13px; }
+.glassText { font-size: 11.5px; color: var(--kc-muted); }

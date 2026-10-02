@@ -1,1 +1,82 @@
-/* pendiente: P6 */
+/* Interfaz del propio laboratorio. No usa --kc-*: no cambia con la paleta que se prueba.
+   Contrastes medidos (AA): texto >= 4.5, bordes de control y foco >= 3. */
+:root {
+  color-scheme: light dark;
+  --ui-bg: #F4F3EF;
+  --ui-panel: #FFFFFF;
+  --ui-sunken: #ECEAE4;
+  --ui-ink: #15171C;
+  --ui-muted: #5B606C;
+  --ui-line: #80858F;      /* borde de controles, >= 3:1 sobre panel */
+  --ui-hair: #DDDAD2;      /* separadores decorativos */
+  --ui-focus: #1D5BCF;
+  --ui-accent: #1D5BCF;
+  --ui-on-accent: #FFFFFF;
+  --ui-ok: #1B6B3A;
+  --ui-font: "Geist", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --ui-mono: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, monospace;
+  --ui-radius: 10px;
+  --ui-shadow: 0 1px 2px rgb(20 22 28 / .06), 0 8px 24px -12px rgb(20 22 28 / .18);
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --ui-bg: #0D0F14;
+    --ui-panel: #151820;
+    --ui-sunken: #0A0C10;
+    --ui-ink: #ECEEF2;
+    --ui-muted: #A1A7B4;
+    --ui-line: #70778A;
+    --ui-hair: #262B36;
+    --ui-focus: #84ADFF;
+    --ui-accent: #84ADFF;
+    --ui-on-accent: #0D0F14;
+    --ui-ok: #6FD39A;
+    --ui-shadow: 0 1px 2px rgb(0 0 0 / .4), 0 10px 28px -12px rgb(0 0 0 / .6);
+  }
+}
+
+body { background: var(--ui-bg); color: var(--ui-ink); font-family: var(--ui-font); font-size: 15px; }
+a { color: var(--ui-accent); text-underline-offset: 3px; }
+:focus-visible { outline: 2px solid var(--ui-focus); outline-offset: 2px; border-radius: 4px; }
+.ui-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+.ui-btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+  min-height: 36px; padding: 0 14px; border-radius: 8px; cursor: pointer;
+  border: 1px solid var(--ui-line); background: var(--ui-panel); color: var(--ui-ink);
+  font-size: 13.5px; font-weight: 500; text-decoration: none; line-height: 1;
+  transition: background-color .15s, border-color .15s;
+}
+.ui-btn:hover { border-color: var(--ui-ink); }
+.ui-btn[disabled] { opacity: .55; cursor: not-allowed; }
+.ui-btn--primary { background: var(--ui-accent); border-color: var(--ui-accent); color: var(--ui-on-accent); }
+.ui-btn--primary:hover { border-color: var(--ui-ink); }
+.ui-btn--ghost { background: transparent; }
+.ui-btn--icon { min-width: 36px; padding: 0; font-size: 18px; }
+
+.ui-select, .ui-input {
+  min-height: 36px; width: 100%; padding: 0 10px; border-radius: 8px;
+  border: 1px solid var(--ui-line); background: var(--ui-panel); color: var(--ui-ink); font-size: 13.5px;
+}
+.ui-label { display: block; font-size: 12px; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; color: var(--ui-muted); margin-bottom: 6px; }
+.ui-range { width: 100%; accent-color: var(--ui-accent); min-height: 24px; }
+.ui-pill {
+  display: inline-block; padding: 2px 8px; border-radius: 999px; font-size: 11.5px; font-weight: 600;
+  border: 1px solid var(--ui-line); color: var(--ui-muted); white-space: nowrap;
+}
+.ui-code { font-family: var(--ui-mono); font-size: 12.5px; }
+.ui-pre {
+  font-family: var(--ui-mono); font-size: 12px; line-height: 1.55; padding: 14px; border-radius: var(--ui-radius);
+  background: var(--ui-sunken); border: 1px solid var(--ui-hair); overflow: auto; max-height: 320px; white-space: pre;
+}
+.ui-empty {
+  padding: 28px; text-align: center; color: var(--ui-muted); border: 1px dashed var(--ui-line); border-radius: var(--ui-radius);
+}
+.ui-seg { display: inline-flex; border: 1px solid var(--ui-line); border-radius: 8px; overflow: hidden; background: var(--ui-panel); }
+.ui-seg button { min-height: 34px; padding: 0 14px; border: 0; background: transparent; cursor: pointer; font-size: 13.5px; }
+.ui-seg button + button { border-left: 1px solid var(--ui-line); }
+.ui-seg button[aria-pressed="true"], .ui-seg button[aria-selected="true"] { background: var(--ui-accent); color: var(--ui-on-accent); font-weight: 600; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition-duration: .001ms !important; animation-duration: .001ms !important; scroll-behavior: auto !important; }
+}

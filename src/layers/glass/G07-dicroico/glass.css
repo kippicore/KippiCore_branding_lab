@@ -1,0 +1,20 @@
+/* Dicroico: el tornasol sale de las escalas tonales del tema, no de colores fijos. */
+.kc-glass--G07 {
+  background: linear-gradient(120deg,
+                color-mix(in srgb, var(--kc-primary-300) 14%, transparent),
+                color-mix(in srgb, var(--kc-glow-mix) 14%, transparent) 50%,
+                color-mix(in srgb, var(--kc-accent-300) 14%, transparent)),
+              color-mix(in srgb, var(--kc-surface) var(--kc-glass-veil), transparent);
+  -webkit-backdrop-filter: blur(var(--kc-glass-blur)) saturate(1.5);
+  backdrop-filter: blur(var(--kc-glass-blur)) saturate(1.5);
+  border-radius: 18px;
+}
+.kc-glass--G07::after { /* filo iridiscente */
+  content: ""; position: absolute; inset: 0; padding: 1.6px; z-index: 1; pointer-events: none;
+  border-radius: inherit;
+  background: conic-gradient(from 210deg, var(--kc-primary-300), var(--kc-accent-300),
+              var(--kc-glow-mix), var(--kc-primary-500), var(--kc-accent-500), var(--kc-primary-300));
+  -webkit-mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+}

@@ -1,0 +1,13 @@
+/* El backdrop-filter va en ::before: un padre con backdrop-filter se vuelve raíz del backdrop. */
+.kc-glass--G08 {
+  background: linear-gradient(180deg, color-mix(in srgb, var(--kc-surface) var(--kc-glass-veil), transparent), transparent);
+  border-radius: 18px;
+}
+.kc-glass--G08::before {
+  content: ""; position: absolute; inset: 0; z-index: 0; pointer-events: none;
+  border-radius: inherit;
+  -webkit-backdrop-filter: blur(var(--kc-glass-blur)) saturate(1.4);
+  backdrop-filter: blur(var(--kc-glass-blur)) saturate(1.4);
+  -webkit-mask-image: linear-gradient(180deg, #000 35%, rgba(0,0,0,.25));
+  mask-image: linear-gradient(180deg, #000 35%, rgba(0,0,0,.25));
+}

@@ -1,4 +1,6 @@
 import { createRoot } from 'react-dom/client';
 import './styles/reset.css';
-// pendiente: P6 (App real)
-createRoot(document.getElementById('root')!).render(<main><h1>KippiCore · Laboratorio de marca</h1></main>);
+import './styles/ui.css';
+import { App } from './app/App';
+
+createRoot(document.getElementById('root')!).render(<App />);

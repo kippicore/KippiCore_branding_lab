@@ -1,0 +1,12 @@
+.kc-glass--G04 {
+  background: color-mix(in srgb, var(--kc-surface) var(--kc-glass-veil), transparent);
+  -webkit-backdrop-filter: blur(var(--kc-glass-blur)) saturate(1.2);
+  backdrop-filter: blur(var(--kc-glass-blur)) saturate(1.2);
+  border-radius: 18px;
+}
+.kc-glass--G04::before { /* grano fino: feTurbulence en data: URL */
+  content: ""; position: absolute; inset: 0; z-index: 0; pointer-events: none;
+  border-radius: inherit;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='150'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='.33 .33 .33 0 0 .33 .33 .33 0 0 .33 .33 .33 0 0 0 0 0 0 1'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E") 0 0 / 150px;
+  opacity: .55; mix-blend-mode: overlay;
+}

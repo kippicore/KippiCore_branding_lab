@@ -1,0 +1,23 @@
+/* Piezas comunes de las plantillas. Colores solo vía var(--kc-*). */
+.status {
+  display: inline-flex; align-items: center; gap: 6px; white-space: nowrap;
+  padding: 3px 9px 3px 8px; border-radius: 999px;
+  font: 500 12px/1.3 var(--kc-font-text); color: var(--kc-ink);
+  background: color-mix(in srgb, var(--dot, var(--kc-muted)) 16%, transparent);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--dot, var(--kc-muted)) 30%, transparent);
+}
+.status i { width: 6px; height: 6px; border-radius: 50%; background: var(--dot, var(--kc-muted)); }
+.status[data-tone='accent'] { --dot: var(--kc-accent); }
+.status[data-tone='primary'] { --dot: var(--kc-primary); }
+.status[data-tone='muted'] { --dot: var(--kc-muted); }
+
+/* Rol accent: Playfair itálica (T14) o anotación Caveat (T13). */
+.accent {
+  font-family: var(--kc-font-accent);
+  color: var(--kc-accent-text);
+  font-style: italic;
+  font-weight: 500;
+  letter-spacing: 0;
+  text-transform: none;
+}
+.accent[data-accent-family='Caveat'] { font-style: normal; font-weight: 600; font-size: 1.16em; line-height: 0.8; }

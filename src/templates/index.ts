@@ -1,3 +1,8 @@
 import type { TemplateDef, TemplateId } from '../contracts';
-// pendiente: P5
-export const TEMPLATES: Record<TemplateId, TemplateDef> | Record<string, never> = {};
+import { Hero } from './Hero/Hero';
+import { OrderCard } from './OrderCard/OrderCard';
+
+export const TEMPLATES: Record<TemplateId, TemplateDef> = {
+  hero: { id: 'hero', name: 'Portada web', Component: Hero },
+  'order-card': { id: 'order-card', name: 'Tarjeta de pedido', Component: OrderCard },
+};
