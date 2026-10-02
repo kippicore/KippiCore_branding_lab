@@ -27,7 +27,7 @@ const COLOR = /#[0-9a-fA-F]{6}\b|#[0-9a-fA-F]{3}\b|rgba?\(|hsla?\(|oklch\(|\b(re
 const count = (s: string, re: RegExp): number => (s.match(re) ?? []).length;
 
 describe.each(['hero', 'order-card'] as const)('plantilla %s', (id) => {
-  for (const t of ['T00', 'T13', 'T14'] as const) {
+  for (const t of ['T00', 'T03', 'T14'] as const) {
     it(`marcado correcto con ${t}`, () => {
       const html = render(id, getTypeSystem(t));
       expect(html).not.toMatch(COLOR);
@@ -48,7 +48,7 @@ describe.each(['hero', 'order-card'] as const)('plantilla %s', (id) => {
 describe('hero', () => {
   it('el acento solo existe con rol accent y nunca contiene números', () => {
     expect(render('hero', getTypeSystem('T00'))).not.toContain('data-kc-accent');
-    for (const t of ['T13', 'T14'] as const) {
+    for (const t of ['T14'] as const) {
       const html = render('hero', getTypeSystem(t));
       const m = /data-kc-accent[^>]*>([^<]*)</.exec(html);
       expect(m?.[1]).toBe('celular');

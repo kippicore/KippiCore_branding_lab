@@ -8,8 +8,6 @@ import cssG05 from './G05-ahumado/glass.css?raw';
 import cssG06 from './G06-escarcha/glass.css?raw';
 import cssG07 from './G07-dicroico/glass.css?raw';
 import cssG08 from './G08-progresivo/glass.css?raw';
-import cssG09 from './G09-grabado/glass.css?raw';
-import cssG10 from './G10-vitral/glass.css?raw';
 import { g01 } from './G01-esmerilado/model';
 import { g02 } from './G02-liquido/model';
 import { g03 } from './G03-acanalado/model';
@@ -18,14 +16,11 @@ import { g05 } from './G05-ahumado/model';
 import { g06 } from './G06-escarcha/model';
 import { g07 } from './G07-dicroico/model';
 import { g08 } from './G08-progresivo/model';
-import { g09 } from './G09-grabado/model';
-import { g10 } from './G10-vitral/model';
 
 const PARTS: Record<GlassId, { css: string; model: GlassModel }> = {
   G01: { css: cssG01, model: g01 }, G02: { css: cssG02, model: g02 }, G03: { css: cssG03, model: g03 },
   G04: { css: cssG04, model: g04 }, G05: { css: cssG05, model: g05 }, G06: { css: cssG06, model: g06 },
-  G07: { css: cssG07, model: g07 }, G08: { css: cssG08, model: g08 }, G09: { css: cssG09, model: g09 },
-  G10: { css: cssG10, model: g10 },
+  G07: { css: cssG07, model: g07 }, G08: { css: cssG08, model: g08 },
 };
 
 export const GLASSES: readonly GlassLayer[] = GLASS_META.map((m): GlassLayer => ({

@@ -1,31 +1,7 @@
 {
- "C01": {
-  "concept": "Un azul tan oscuro que se lee como tinta de contrato, no como banco, y un acento cobre: el metal que conduce. Seriedad de consultora con un guiño de ingeniería.",
-  "risk": "Cerca del territorio de las consultoras grandes. El cobre debe ser escaso o empieza a leerse como lujo."
- },
- "C02": {
-  "concept": "Espresso, crema y el rojo de la cereza del café. Calidez de origen colombiano sin caer en el sombrero; el rojo cereza es el color de la acción.",
-  "risk": "El café es un territorio muy usado por marcas colombianas y puede leerse como gastronomía."
- },
- "C03": {
-  "concept": "Musgo de frailejón, neblina y ocre. Sale del mar azul con un verde serio y poco saturado que transmite calma y permanencia.",
-  "risk": "Los verdes apagados pueden confundirse con sostenibilidad u ONG si la tipografía no es técnica."
- },
- "C04": {
-  "concept": "Verde esmeralda profundo y oro viejo: la piedra colombiana. Valor, rareza y solidez; es la paleta más premium de la serie.",
-  "risk": "Verde con oro puede leer a banca privada o licores. El oro en pantalla se ve marrón si se satura poco."
- },
  "C05": {
   "concept": "Coral eléctrico y turquesa sobre marfil. Energía, cercanía y recordación; ideal para demos de pyme, redes y eventos.",
   "risk": "El coral no soporta texto blanco: el texto sobre coral va en tinta. Pierde credibilidad frente a un comprador de ERP."
- },
- "C06": {
-  "concept": "Grises de grafito y el naranja de la señalización industrial. Lenguaje de taller y herramienta: una marca que trabaja.",
-  "risk": "Gris con naranja es frecuente en logística, ferretería y herramientas eléctricas."
- },
- "C07": {
-  "concept": "Índigo profundo con un lima ácido. Tecnológico y contemporáneo. El lima solo funciona como relleno con texto en tinta, nunca como texto sobre claro.",
-  "risk": "El lima es muy de tendencia y puede envejecer rápido; el índigo-violeta está creciendo en SaaS."
  },
  "C08": {
   "concept": "Terracota de Barichara, cal y pizarra. Artesanal y humano: la idea de software hecho a la medida, a mano.",
@@ -35,53 +11,21 @@
   "concept": "El azul de Prusia de los planos técnicos, el papel y el rojo del lápiz de corrección. Es azul, pero un azul con historia; pareja natural de la textura Plano técnico.",
   "risk": "Sigue siendo azul: la diferencia la cargan el rojo y la textura. Sin ellos se pierde en el mar azul."
  },
- "C10": {
-  "concept": "Rosa guayaba, verde hoja y crema. Inesperado en tecnología, muy memorable, tropical sin caricatura.",
-  "risk": "Difícil de vender a un gerente de planta para un ERP. Funciona mejor como submarca de la línea pyme."
- },
  "C11": {
   "concept": "Blanco y negro casi absolutos con un solo amarillo maíz que actúa como resaltador. El sistema más disciplinado: todo el carácter lo carga la tipografía.",
   "risk": "Amarillo con negro es el código de precaución; el amarillo tiene que ser escaso y nunca de fondo completo."
- },
- "C12": {
-  "concept": "Ciruela profunda y el magenta de la Cattleya trianae, la flor nacional. Sofisticado y poco común en software empresarial.",
-  "risk": "El magenta se asocia a telecomunicaciones y belleza; la ciruela debe dominar para sostener la seriedad."
- },
- "C13": {
-  "concept": "Pardo de hongo, crema y un turquesa bioluminiscente: la red invisible que conecta un bosque. Metáfora directa de software que conecta los procesos de una empresa.",
-  "risk": "El turquesa sobre pardo puede leerse como marca de bienestar o cosmética natural."
- },
- "C14": {
-  "concept": "Azul petróleo profundo y ámbar de miel: técnico como un panel de control, cálido como una luz de taller. Una pareja complementaria con mucha legibilidad.",
-  "risk": "El petróleo es frecuente en salud y aseguradoras; el ámbar necesita presencia para diferenciar."
  },
  "C15": {
   "concept": "Vino tinto y azul acero sobre hueso: tradición, criterio y peso institucional, con un toque frío que lo ancla a la tecnología.",
   "risk": "El borgoña puede leerse como bodega de vinos, firma de abogados o universidad privada."
  },
- "C16": {
-  "concept": "Un cobalto vivo sobre arena: azul, pero con energía de pigmento puro, no de banco. La arena lo calienta y lo vuelve cercano.",
-  "risk": "Sigue en la familia azul; necesita una tipografía con carácter para no parecer otra fintech."
- },
- "C17": {
-  "concept": "Verde oliva y mandarina: mercado, cosecha, tienda de barrio. Muy cálida y optimista, ideal para la línea de pymes.",
-  "risk": "La mandarina no alcanza contraste con texto blanco: el texto sobre ella va en tinta."
- },
  "C18": {
   "concept": "Gris pizarra con un lavanda suave: calma, orden y algo de imaginación. Poco común en el software colombiano.",
   "risk": "El lavanda no se lee bien como texto sobre claro: úsalo como relleno."
  },
- "C19": {
-  "concept": "Chocolate de cacao santandereano y verde pistacho: cálido, artesanal y fresco a la vez.",
-  "risk": "Puede leerse como marca de alimentos; necesita una tipografía técnica que la ancle."
- },
  "C20": {
   "concept": "Un verde abismal casi negro con cian y violeta luminosos, como organismos que brillan en la oscuridad. Pensada sobre todo para el modo oscuro y las texturas futuristas.",
   "risk": "En modo claro pierde la mitad de su efecto; el neón cansa si aparece en todo."
- },
- "C21": {
-  "concept": "Óxido de raíz, pergamino y verde musgo: tierra trabajada, algo que crece despacio pero firme. Pareja natural de las texturas de raíces y herbario.",
-  "risk": "Puede parecer marca agrícola o de café especial."
  },
  "C22": {
   "concept": "Grises metálicos fríos y un cian eléctrico: precisión de máquina, superficies de aluminio. La más futurista de las paletas sobrias.",

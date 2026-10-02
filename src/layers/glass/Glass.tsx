@@ -9,8 +9,6 @@ import './G05-ahumado/glass.css';
 import './G06-escarcha/glass.css';
 import './G07-dicroico/glass.css';
 import './G08-progresivo/glass.css';
-import './G09-grabado/glass.css';
-import './G10-vitral/glass.css';
 
 export interface GlassProps {
   glass: GlassLayer;

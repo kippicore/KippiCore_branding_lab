@@ -22,11 +22,11 @@ const rgbOf = (c: string): string | null => {
 const colorSet = (list: string[]) => new Set(list.map(rgbOf).filter((x): x is string => !!x).filter((x) => x !== 'FFFFFF' && x !== '000000'));
 
 describe('registro', () => {
-  it('14 atmósferas, ids únicos, peso de la spec', () => {
-    expect(ATMOSPHERES).toHaveLength(14);
-    expect(new Set(ATMOSPHERES.map((a) => a.id)).size).toBe(14);
+  it('11 atmósferas, ids únicos, peso de la spec', () => {
+    expect(ATMOSPHERES).toHaveLength(11);
+    expect(new Set(ATMOSPHERES.map((a) => a.id)).size).toBe(11);
     expect(ATMOSPHERES.map((a) => a.weight)).toEqual(ATMOSPHERE_META.map((m) => m.weight));
-    expect(ATMOSPHERES.map((a) => a.weight)).toEqual([0.35, 0.7, 0.6, 0.3, 0.2, 0.25, 0.25, 0.5, 0.45, 0.6, 0.25, 0.55, 0.55, 0.5]);
+    expect(ATMOSPHERES.map((a) => a.weight)).toEqual([0.35, 0.7, 0.6, 0.3, 0.25, 0.5, 0.6, 0.25, 0.55, 0.55, 0.5]);
     for (const a of ATMOSPHERES) expect(a.staticCss().length).toBeGreaterThan(20);
   });
 });
@@ -68,13 +68,13 @@ describe('regla de oro canvas', () => {
 });
 
 describe('semilla', () => {
-  it('misma semilla → mismas operaciones; otra → distintas (A04, A05)', async () => {
-    for (const id of ['A04', 'A05']) {
+  it('misma semilla → mismas operaciones; otra → distintas (A04)', async () => {
+    for (const id of ['A04']) {
       const a = (await colorsOf(id, themeA, 5)).colorsUsed().join('|');
       const b = (await colorsOf(id, themeA, 5)).colorsUsed().join('|');
       expect(a).toBe(b);
     }
     const pos = (id: string, seed: number) => JSON.stringify(getAtmosphere(id as never).renderStatic(themeA, { seed }), (_k: string, v: unknown) => (typeof v === 'function' ? undefined : v));
-    for (const id of ['A04', 'A05']) expect(pos(id, 5)).not.toBe(pos(id, 6));
+    for (const id of ['A04']) expect(pos(id, 5)).not.toBe(pos(id, 6));
   });
 });

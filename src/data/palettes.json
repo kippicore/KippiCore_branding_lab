@@ -1,89 +1,5 @@
 [
  {
-  "id": "C01",
-  "name": "Tinta & Cobre",
-  "reg": 20,
-  "light": {
-   "bg": "#F6F3EE",
-   "surface": "#FFFFFF",
-   "ink": "#12161F",
-   "muted": "#5A6170",
-   "primary": "#1B2A41",
-   "accent": "#A65628"
-  },
-  "dark": {
-   "bg": "#0E1117",
-   "surface": "#171B23",
-   "ink": "#ECE7DF",
-   "muted": "#9AA1AE",
-   "primary": "#8FA7C9",
-   "accent": "#E0935C"
-  }
- },
- {
-  "id": "C02",
-  "name": "Café de origen",
-  "reg": 70,
-  "light": {
-   "bg": "#F5EFE6",
-   "surface": "#FFFDF9",
-   "ink": "#241A14",
-   "muted": "#6B5A4D",
-   "primary": "#3B2416",
-   "accent": "#B3261E"
-  },
-  "dark": {
-   "bg": "#15100C",
-   "surface": "#1F1813",
-   "ink": "#F1E7DA",
-   "muted": "#B3A08E",
-   "primary": "#D9B48F",
-   "accent": "#F07A6E"
-  }
- },
- {
-  "id": "C03",
-  "name": "Páramo",
-  "reg": 40,
-  "light": {
-   "bg": "#F1F2EC",
-   "surface": "#FFFFFF",
-   "ink": "#1A2420",
-   "muted": "#56635C",
-   "primary": "#2F4A3E",
-   "accent": "#A57A12"
-  },
-  "dark": {
-   "bg": "#101614",
-   "surface": "#18201D",
-   "ink": "#E6EBE4",
-   "muted": "#9FAEA5",
-   "primary": "#9CC2AE",
-   "accent": "#E3B95A"
-  }
- },
- {
-  "id": "C04",
-  "name": "Esmeralda",
-  "reg": 15,
-  "light": {
-   "bg": "#F4F1E8",
-   "surface": "#FFFFFF",
-   "ink": "#0E1A16",
-   "muted": "#4F5E57",
-   "primary": "#0B5D45",
-   "accent": "#9A7A25"
-  },
-  "dark": {
-   "bg": "#07120F",
-   "surface": "#0F1D18",
-   "ink": "#E9E4D3",
-   "muted": "#9DB0A6",
-   "primary": "#4FC59A",
-   "accent": "#D6B35C"
-  }
- },
- {
   "id": "C05",
   "name": "Caribe eléctrico",
   "reg": 85,
@@ -102,48 +18,6 @@
    "muted": "#9CA3B0",
    "primary": "#FF7A5E",
    "accent": "#3FD1C8"
-  }
- },
- {
-  "id": "C06",
-  "name": "Grafito & Señal",
-  "reg": 35,
-  "light": {
-   "bg": "#EEEEEC",
-   "surface": "#FAFAF9",
-   "ink": "#18191B",
-   "muted": "#5C5F66",
-   "primary": "#2B2D31",
-   "accent": "#E25F00"
-  },
-  "dark": {
-   "bg": "#121315",
-   "surface": "#1C1D20",
-   "ink": "#EDEDEB",
-   "muted": "#A0A3A9",
-   "primary": "#D6D7DA",
-   "accent": "#FF8A33"
-  }
- },
- {
-  "id": "C07",
-  "name": "Índigo & Lima",
-  "reg": 60,
-  "light": {
-   "bg": "#F4F3F8",
-   "surface": "#FFFFFF",
-   "ink": "#15132B",
-   "muted": "#5E5B78",
-   "primary": "#3A2E9E",
-   "accent": "#B8E62E"
-  },
-  "dark": {
-   "bg": "#0F0E1C",
-   "surface": "#1A1830",
-   "ink": "#ECEAF7",
-   "muted": "#A3A0C2",
-   "primary": "#A99CFF",
-   "accent": "#C8F25A"
   }
  },
  {
@@ -189,27 +63,6 @@
   }
  },
  {
-  "id": "C10",
-  "name": "Guayaba",
-  "reg": 90,
-  "light": {
-   "bg": "#FFF6F1",
-   "surface": "#FFFFFF",
-   "ink": "#2A1418",
-   "muted": "#74555B",
-   "primary": "#1F4D3A",
-   "accent": "#E8476F"
-  },
-  "dark": {
-   "bg": "#160D0F",
-   "surface": "#22151A",
-   "ink": "#F8E9E7",
-   "muted": "#C2A2A6",
-   "primary": "#7FC8A3",
-   "accent": "#FF8AA5"
-  }
- },
- {
   "id": "C11",
   "name": "Tinta & Maíz",
   "reg": 45,
@@ -228,69 +81,6 @@
    "muted": "#A1A1A6",
    "primary": "#F4F4F0",
    "accent": "#F7CE4A"
-  }
- },
- {
-  "id": "C12",
-  "name": "Orquídea",
-  "reg": 55,
-  "light": {
-   "bg": "#F8F4F6",
-   "surface": "#FFFFFF",
-   "ink": "#221420",
-   "muted": "#6A5666",
-   "primary": "#5B1E52",
-   "accent": "#C2378F"
-  },
-  "dark": {
-   "bg": "#140C13",
-   "surface": "#20141E",
-   "ink": "#F3E9F0",
-   "muted": "#BBA3B5",
-   "primary": "#E39BD0",
-   "accent": "#F06BB8"
-  }
- },
- {
-  "id": "C13",
-  "name": "Micelio",
-  "reg": 60,
-  "light": {
-   "bg": "#F4F0E8",
-   "surface": "#FFFFFF",
-   "ink": "#1E1A16",
-   "muted": "#635A50",
-   "primary": "#3E3328",
-   "accent": "#1F7A70"
-  },
-  "dark": {
-   "bg": "#12100D",
-   "surface": "#1C1915",
-   "ink": "#EFE9DF",
-   "muted": "#ACA196",
-   "primary": "#CDBBA4",
-   "accent": "#5FD1C1"
-  }
- },
- {
-  "id": "C14",
-  "name": "Petróleo & Ámbar",
-  "reg": 30,
-  "light": {
-   "bg": "#EEF2F2",
-   "surface": "#FFFFFF",
-   "ink": "#0D1C20",
-   "muted": "#4F6166",
-   "primary": "#0E4E5A",
-   "accent": "#A35B0B"
-  },
-  "dark": {
-   "bg": "#081316",
-   "surface": "#102125",
-   "ink": "#E3EEEF",
-   "muted": "#9AB0B4",
-   "primary": "#6FC2CF",
-   "accent": "#F0A640"
   }
  },
  {
@@ -315,48 +105,6 @@
   }
  },
  {
-  "id": "C16",
-  "name": "Cobalto & Arena",
-  "reg": 55,
-  "light": {
-   "bg": "#F2EEE6",
-   "surface": "#FFFFFF",
-   "ink": "#121628",
-   "muted": "#585D70",
-   "primary": "#1F3FBF",
-   "accent": "#B5822A"
-  },
-  "dark": {
-   "bg": "#0C0F1C",
-   "surface": "#151A2C",
-   "ink": "#ECEDF5",
-   "muted": "#A0A5BD",
-   "primary": "#8CA2FF",
-   "accent": "#E3B861"
-  }
- },
- {
-  "id": "C17",
-  "name": "Oliva & Mandarina",
-  "reg": 75,
-  "light": {
-   "bg": "#F5F2E8",
-   "surface": "#FFFFFF",
-   "ink": "#1C1F12",
-   "muted": "#5E6250",
-   "primary": "#4A5A23",
-   "accent": "#E36B1F"
-  },
-  "dark": {
-   "bg": "#11130B",
-   "surface": "#1B1E13",
-   "ink": "#EEF0E2",
-   "muted": "#A9AE96",
-   "primary": "#B3C77A",
-   "accent": "#FF9550"
-  }
- },
- {
   "id": "C18",
   "name": "Pizarra & Lavanda",
   "reg": 50,
@@ -378,27 +126,6 @@
   }
  },
  {
-  "id": "C19",
-  "name": "Cacao & Pistacho",
-  "reg": 70,
-  "light": {
-   "bg": "#F6F1EA",
-   "surface": "#FFFFFF",
-   "ink": "#24160F",
-   "muted": "#6B5B50",
-   "primary": "#4A2C21",
-   "accent": "#8DB255"
-  },
-  "dark": {
-   "bg": "#150D09",
-   "surface": "#20160F",
-   "ink": "#F2E8DE",
-   "muted": "#B7A598",
-   "primary": "#D9B7A0",
-   "accent": "#A9CF6E"
-  }
- },
- {
   "id": "C20",
   "name": "Neón biológico",
   "reg": 65,
@@ -417,27 +144,6 @@
    "muted": "#93ABA5",
    "primary": "#2DE2C4",
    "accent": "#B488FF"
-  }
- },
- {
-  "id": "C21",
-  "name": "Raíz & Óxido",
-  "reg": 45,
-  "light": {
-   "bg": "#F2EADB",
-   "surface": "#FBF6EC",
-   "ink": "#22170F",
-   "muted": "#695A4B",
-   "primary": "#7A2E1C",
-   "accent": "#4E6A2E"
-  },
-  "dark": {
-   "bg": "#140E09",
-   "surface": "#1F1710",
-   "ink": "#F0E6D6",
-   "muted": "#B5A48F",
-   "primary": "#E8896E",
-   "accent": "#A3C27A"
   }
  },
  {

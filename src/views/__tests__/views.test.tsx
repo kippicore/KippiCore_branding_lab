@@ -15,14 +15,14 @@ import { Ficha, resolveFicha } from '../Ficha/Ficha';
 import { CodeBar, fullCode } from '../Combinador/CodeBar';
 
 const S: LabState = { ...DEFAULT_STATE };
-const L: ShortcutLists = { types: ['T00', 'T01', 'T02'], palettes: ['C01', 'C02'], atmospheres: ['A01', 'A02'], glasses: ['G01', 'G02'] };
+const L: ShortcutLists = { types: ['T00', 'T02', 'T03'], palettes: ['C05', 'C08'], atmospheres: ['A01', 'A02'], glasses: ['G01', 'G02'] };
 beforeEach(() => cleanup());
 
 describe('atajos', () => {
   it('cambian el estado correcto', () => {
-    expect(resolveShortcut('t', { ...S, type: 'T00' }, L)).toEqual({ patch: { type: 'T01' } });
-    expect(resolveShortcut('T', { ...S, type: 'T00' }, L)).toEqual({ patch: { type: 'T02' } });
-    expect(resolveShortcut('c', { ...S, palette: 'C02' }, L)).toEqual({ patch: { palette: 'C01' } });
+    expect(resolveShortcut('t', { ...S, type: 'T00' }, L)).toEqual({ patch: { type: 'T02' } });
+    expect(resolveShortcut('T', { ...S, type: 'T00' }, L)).toEqual({ patch: { type: 'T03' } });
+    expect(resolveShortcut('c', { ...S, palette: 'C08' }, L)).toEqual({ patch: { palette: 'C05' } });
     expect(resolveShortcut('m', { ...S, mode: 'dark' }, L)).toEqual({ patch: { mode: 'light' } });
     expect(resolveShortcut('d', { ...S, motion: 'dynamic' }, L)).toEqual({ patch: { motion: 'static' } });
     expect(resolveShortcut(']', { ...S, speed: 1 }, L)).toEqual({ patch: { speed: 1.25 } });

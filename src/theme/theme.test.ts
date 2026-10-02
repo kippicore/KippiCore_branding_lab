@@ -26,8 +26,8 @@ describe('contraste', () => {
   // Excepciones documentadas (no se cambia el dato); se informan en el informe de P1.
   const EXC_INK: string[] = [];
   const EXC_MUTED: string[] = ['C08:light']; // 5.38 < 5.4 (dato de la spec, no se modifica)
-  it('22 paletas × 2 modos: ink/bg ≥ 13 y muted/bg ≥ 5.4', () => {
-    expect(PALETTES).toHaveLength(22);
+  it('8 paletas × 2 modos: ink/bg ≥ 13 y muted/bg ≥ 5.4', () => {
+    expect(PALETTES).toHaveLength(8);
     const bad: string[] = [];
     for (const p of PALETTES) for (const m of MODES) {
       const r = m === 'dark' ? p.dark : p.light;
@@ -41,8 +41,8 @@ describe('contraste', () => {
 
 describe('derive', () => {
   const byId = (id: string) => PALETTES.find((p) => p.id === id)!;
-  it('accentIsFillOnly en claro para C07, C11, C17, C18, C19', () => {
-    for (const id of ['C07', 'C11', 'C17', 'C18', 'C19']) expect(deriveTheme(byId(id), 'light').derived.accentIsFillOnly).toBe(true);
+  it('accentIsFillOnly en claro para C11, C18', () => {
+    for (const id of ['C11', 'C18']) expect(deriveTheme(byId(id), 'light').derived.accentIsFillOnly).toBe(true);
   });
   it('coral (C05 claro) lleva tinta sobre primario', () => {
     const t = deriveTheme(byId('C05'), 'light');
@@ -59,8 +59,8 @@ describe('derive', () => {
     }
   });
   it('memoiza y lerpTheme interpola', () => {
-    const a = deriveTheme(byId('C01'), 'light'), b = deriveTheme(byId('C05'), 'dark');
-    expect(deriveTheme(byId('C01'), 'light')).toBe(a);
+    const a = deriveTheme(byId('C05'), 'light'), b = deriveTheme(byId('C08'), 'dark');
+    expect(deriveTheme(byId('C05'), 'light')).toBe(a);
     expect(lerpTheme(a, b, 0)).toBe(a);
     expect(lerpTheme(a, b, 1)).toBe(b);
     expect(lerpTheme(a, b, 0.5).roles.bg).not.toBe(a.roles.bg);
@@ -72,9 +72,9 @@ describe('oklch y mix', () => {
     const [L, C, h] = hexToOklch('#FF0000');
     expect(L).toBeCloseTo(0.628, 2); expect(C).toBeCloseTo(0.258, 2); expect(h).toBeCloseTo(29.2, 0);
   });
-  it('ida y vuelta de las 264 cifras (≤ 1/255 por canal)', () => {
+  it('ida y vuelta de las 96 cifras (≤ 1/255 por canal)', () => {
     const all: Hex[] = PALETTES.flatMap((p) => [...Object.values(p.light), ...Object.values(p.dark)]);
-    expect(all).toHaveLength(264);
+    expect(all).toHaveLength(96);
     for (const h of all) {
       const [l, c, hu] = hexToOklch(h);
       const back = oklchToHex(l, c, hu);
@@ -112,7 +112,7 @@ describe('prng e imageops', () => {
 describe('toCssVars y tipografías', () => {
   it('claves completas y sin undefined', () => {
     const t = deriveTheme(PALETTES[0]!, 'dark');
-    const v = toCssVars(t, TYPE_SYSTEMS[14]);
+    const v = toCssVars(t, TYPE_SYSTEMS[8]);
     const need = ['bg', 'surface', 'ink', 'muted', 'primary', 'accent', 'on-primary', 'on-accent', 'accent-text', 'glow', 'glow-2', 'glow-mix',
       'ambient', 'bg-deep', 'smoke-base', 'on-smoke', 'muted-on-smoke', 'blend', 'mode', 'font-display', 'font-text', 'font-mono', 'font-accent',
       'display-weight', 'display-tracking', 'display-scale', 'display-transform', 'label-tracking',
@@ -122,7 +122,7 @@ describe('toCssVars y tipografías', () => {
     expect(t.cssVars['--kc-bg']).toBe(t.roles.bg);
   });
   it('familias dentro de googleFontsQuery; T14 correcta', () => {
-    expect(TYPE_SYSTEMS).toHaveLength(15);
+    expect(TYPE_SYSTEMS).toHaveLength(9);
     for (const s of TYPE_SYSTEMS) {
       const q = s.googleFontsQuery.replace(/\+/g, ' ');
       for (const r of [s.display, s.text, s.mono, s.accent]) if (r) expect(q, `${s.id} ${r.family}`).toContain(`family=${r.family}`);

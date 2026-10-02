@@ -4,8 +4,6 @@ import type { DynamicLayerFactory, DynamicLayerInstance } from '../contracts';
 import { createTicker, type Tickable } from '../lib/ticker';
 import { themeA, themeB } from '../test/two-themes';
 import { DynamicHost } from './DynamicHost';
-import { Sim } from '../layers/atmospheres/A05-bioluminiscencia/sim';
-import { create as createBio } from '../layers/atmospheres/A05-bioluminiscencia/dynamic';
 import { create as createAurora } from '../layers/atmospheres/A01-aurora/dynamic';
 import { create as createPlasma } from '../layers/atmospheres/A10-plasma/dynamic';
 import { create as createRejilla } from '../layers/atmospheres/A11-rejilla/dynamic';
@@ -23,11 +21,11 @@ const emitVisible = (v: boolean) => act(() => { ioCb?.([{ isIntersecting: v }]);
 function setup(over: { reduced?: boolean } = {}) {
   const inst = mockInstance();
   const create = vi.fn(() => inst);
-  const factory: DynamicLayerFactory = { id: 'A05', tech: 'css', cycleMs: 1000, usesPointer: false, load: async () => ({ create }) };
+  const factory: DynamicLayerFactory = { id: 'A01', tech: 'css', cycleMs: 1000, usesPointer: false, load: async () => ({ create }) };
   vi.stubGlobal('matchMedia', (q: string) => ({ matches: !!over.reduced && q.includes('reduce'), addEventListener() {}, removeEventListener() {} }));
   const env = fakeEnv();
   const tk = createTicker(env);
-  const ui = <DynamicHost atmosphere={{ id: 'A05' }} theme={themeA} seed={1} speed={1} factory={factory} ticker={tk} />;
+  const ui = <DynamicHost atmosphere={{ id: 'A01' }} theme={themeA} seed={1} speed={1} factory={factory} ticker={tk} />;
   return { inst, create, tk, ui };
 }
 const flush = () => act(async () => { await Promise.resolve(); await Promise.resolve(); });
@@ -106,32 +104,14 @@ describe('Ticker', () => {
   });
 });
 
-describe('A05 determinismo', () => {
-  it('misma semilla y tMs → mismas posiciones; otra semilla → distintas', () => {
-    const run = (seed: number) => { const s = new Sim(seed, 0.625); s.advanceTo(8000); return s.particles.map((p) => [p.x, p.y]); };
-    expect(run(7)).toEqual(run(7));
-    expect(run(7)).not.toEqual(run(8));
-  });
-  it('el resultado no depende de cómo se parta el avance en cuadros', () => {
-    const a = new Sim(3, 0.6); a.advanceTo(5000);
-    const b = new Sim(3, 0.6); for (let t = 0; t <= 5000; t += 37) b.advanceTo(t); b.advanceTo(5000);
-    expect(b.particles.map((p) => p.x)).toEqual(a.particles.map((p) => p.x));
-  });
-  it('t = 0 coincide con la posición inicial del estático y las 34 primeras sobreviven a la densidad', () => {
-    const a = new Sim(5, 0.6, 34), b = new Sim(5, 0.6, 50);
-    expect(a.particles.slice(0, 34).map((p) => [p.x, p.y])).toEqual(b.particles.slice(0, 34).map((p) => [p.x, p.y]));
-    expect(a.brightness(0, 0)).toBe(1);
-  });
-});
-
 describe('regla de oro dinámica', () => {
   const init = (theme = themeA) => ({ theme, seed: 1, params });
-  const names = ['A01', 'A05', 'A10', 'A11'] as const;
-  const makers = { A01: createAurora, A05: createBio, A10: createPlasma, A11: createRejilla };
+  const names = ['A01', 'A10', 'A11'] as const;
+  const makers = { A01: createAurora, A10: createPlasma, A11: createRejilla };
   for (const n of names) {
     it(`${n}: inspectColors cambia por completo tras setTheme(B, 0)`, () => {
       const inst = makers[n](init());
-      if (n === 'A05' || n === 'A11') inst.mount(document.createElement('div'));
+      if (n === 'A11') inst.mount(document.createElement('div'));
       const before = inst.inspectColors!();
       inst.setTheme(themeB, 0);
       const after = inst.inspectColors!();

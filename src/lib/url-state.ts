@@ -5,7 +5,7 @@ import type {
 
 /** Defaults: dirección D-D de la spec (plan §4.6). */
 export const DEFAULT_STATE: LabState = {
-  view: 'combinador', palette: 'C20', type: 'T00', atmosphere: 'A05', glass: 'G01', mode: 'dark',
+  view: 'combinador', palette: 'C20', type: 'T00', atmosphere: 'A01', glass: 'G01', mode: 'dark',
   motion: 'dynamic', speed: 1, veil: null, blur: null, template: 'hero', seed: 1, gallery: 'T', reg: 'all', ficha: null,
 };
 
@@ -75,7 +75,7 @@ export function serializeState(s: LabState): string {
   return out ? `?${out}` : '';
 }
 
-/** «C20 · T00 · A05 · G01» */
+/** «C20 · T00 · A01 · G01» */
 export const comboCode = (s: Pick<LabState, 'palette' | 'type' | 'atmosphere' | 'glass'>): string =>
   `${s.palette} · ${s.type} · ${s.atmosphere} · ${s.glass}`;
 

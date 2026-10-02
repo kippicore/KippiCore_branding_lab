@@ -47,6 +47,6 @@ describe('url-state', () => {
     expect(parseState('?mv=d', { reducedMotion: true }).motion).toBe('dynamic');
   });
   it('comboCode', () => {
-    expect(comboCode(DEFAULT_STATE)).toBe('C20 · T00 · A05 · G01');
+    expect(comboCode(DEFAULT_STATE)).toBe('C20 · T00 · A01 · G01');
   });
 });

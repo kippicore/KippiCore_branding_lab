@@ -6,7 +6,7 @@ Laboratorio interactivo de identidad visual de KippiCore: combina tipografía ×
 - Stack: Vite + React + TypeScript, CSS con variables, OGL (WebGL), Canvas 2D, Vitest.
 
 ## Estado (ronda 1: etapas 1–3)
-22 paletas, tipografías T00–T14 (T14 = sistema KippiLex), atmósferas A01–A14 estáticas (A01, A05, A10, A11 dinámicas), vidrios G01–G10, medidor de legibilidad, exportar tokens CSS/JSON, vistas Combinador, Galerías y Ficha. Pendiente: A15–A18, G11–G20, texturas X01–X40, Matriz, Comparar, favoritos, PNG.
+8 paletas, 9 tipografías (T14 = sistema KippiLex), 11 atmósferas estáticas (A01, A10, A11 dinámicas), 8 vidrios (G01–G08), medidor de legibilidad, exportar tokens CSS/JSON, vistas Combinador, Galerías y Ficha. Pendiente: A15–A18, G11–G20, texturas X01–X40, Matriz, Comparar, favoritos, PNG.
 
 ## Comandos
 ```bash
