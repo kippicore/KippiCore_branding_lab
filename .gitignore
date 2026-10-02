@@ -1,0 +1,6 @@
+dist
+node_modules
+.vercel
+captures
+test-results
+playwright-report
