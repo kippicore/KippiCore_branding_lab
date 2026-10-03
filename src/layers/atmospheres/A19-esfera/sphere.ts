@@ -15,8 +15,8 @@ export const TILT_Z = 0.38, TILT_X = 0.22;
 export const LIGHT: readonly [number, number] = [0.871, 0.49]; // rim más intenso arriba-derecha (y arriba)
 export const N_DYNAMIC = 9000;
 export const N_STATIC = 2200;
-export const EJECTA = 0.035;
-export const INTERIOR = 0.18;
+export const EJECTA = 0.015;
+export const INTERIOR = 0.16;
 
 /** Centro y radio (px CSS): derecha-centro, escala por el lado menor, sin salirse por la derecha. */
 export const layout = (size: Size): { cx: number; cy: number; R: number } => {
@@ -39,7 +39,8 @@ export const waves = (seed: number): Waves => {
 };
 
 export interface Cloud { n: number; pos: Float32Array; rand: Float32Array }
-/** Fibonacci con jitter + ~18 % de polvo interior + ~3.5 % de partículas que se desprenden (rand.y = 1). */
+/** Fibonacci con jitter + ~16 % de polvo interior (siempre dentro de la cáscara) + ~1.5 % de partículas que se desprenden (rand.y = 1).
+ *  La cáscara (rad = 1) es una esfera exacta: nada de lo que sigue la deforma. */
 export const cloud = (seed: number, n: number): Cloud => {
   const r = mulberry32(hashSeed('A19', seed, 'cloud'));
   const pos = new Float32Array(n * 3), rand = new Float32Array(n * 4);
@@ -50,7 +51,7 @@ export const cloud = (seed: number, n: number): Cloud => {
     const ph = i * golden + (r() - 0.5) * 0.06;
     const kindR = r();
     const ejecta = kindR > 1 - EJECTA;
-    const rad = kindR < INTERIOR ? 0.35 + 0.6 * Math.cbrt(r()) : 1;
+    const rad = kindR < INTERIOR ? 0.3 + 0.58 * Math.cbrt(r()) : 1;
     pos[i * 3] = Math.cos(ph) * rr * rad; pos[i * 3 + 1] = y * rad; pos[i * 3 + 2] = Math.sin(ph) * rr * rad;
     rand[i * 4] = r(); rand[i * 4 + 1] = ejecta ? 1 : 0; rand[i * 4 + 2] = r(); rand[i * 4 + 3] = r();
   }
@@ -82,15 +83,17 @@ export const sample = (w: Waves, c: Cloud, i: number, t: number, tilt: readonly 
   let spin = 0, fil = 0, ej = 0;
   if (ejecta) {
     const u = (((t / EJ_T + r2) % 1) + 1) % 1;
-    const rad = 1 + u * (0.45 + 0.7 * r0);
+    const rad = 1 + u * (0.3 + 0.45 * r0);
     p = p.map((v) => (v / len0) * rad);
     spin = -u * 0.35;
-    ej = smooth(0, 0.12, u) * Math.pow(1 - u, 1.6) * 0.85;
+    ej = smooth(0, 0.12, u) * Math.pow(1 - u, 1.6) * 0.6;
   } else {
     const f = field(w, p, t);
     fil = Math.exp(-f * f * 45);
-    const k = 1 + 0.06 * f + 0.04 * fil * breath(t);
-    p = [p[0]! * k + 0.012 * Math.sin(t * 2 * W1 + r2 * TAU), p[1]! * k + 0.012 * Math.cos(t * 3 * W0 + r3 * TAU), p[2]! * k + 0.012 * Math.sin(t * W1 + (r2 + r3) * TAU)];
+    // Solo brillo: el relieve de los filamentos NO desplaza puntos. El temblor es tangencial (la cáscara sigue siendo una esfera exacta).
+    const j = [0.012 * Math.sin(t * 2 * W1 + r2 * TAU), 0.012 * Math.cos(t * 3 * W0 + r3 * TAU), 0.012 * Math.sin(t * W1 + (r2 + r3) * TAU)];
+    const d = (j[0]! * p[0]! + j[1]! * p[1]! + j[2]! * p[2]!) / Math.max(p[0]! * p[0]! + p[1]! * p[1]! + p[2]! * p[2]!, 1e-4);
+    p = [p[0]! + j[0]! - p[0]! * d, p[1]! + j[1]! - p[1]! * d, p[2]! + j[2]! - p[2]! * d];
   }
   rotY(p, (TAU * t) / ROT_T + spin); rotZ(p, TILT_Z); rotX(p, TILT_X); rotX(p, tilt[1]); rotY(p, tilt[0]);
   const len = Math.hypot(p[0]!, p[1]!, p[2]!) || 1;

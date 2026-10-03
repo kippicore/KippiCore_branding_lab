@@ -45,3 +45,26 @@ describe('A19 esfera', () => {
     for (const c of hexA) expect(rb.colorsUsed()).not.toContain(c);
   });
 });
+
+describe('A19 esfera: redondez', () => {
+  it('la cáscara es una esfera exacta (radio 3D = 1) en cualquier instante y con inclinación del puntero', () => {
+    const w = waves(5), c = cloud(5, 3000);
+    for (const t of [0, 7.3, 31, 64.9]) {
+      for (let i = 0; i < c.n; i++) {
+        const len0 = Math.hypot(c.pos[i * 3]!, c.pos[i * 3 + 1]!, c.pos[i * 3 + 2]!);
+        if (len0 < 0.999 || c.rand[i * 4 + 1]! > 0.5) continue;                  // solo cáscara; sin polvo interior ni partículas que se desprenden
+        const s = sample(w, c, i, t, [0.1, -0.08]);
+        expect(Math.hypot(s.x / s.s, s.y / s.s, s.z)).toBeCloseTo(1, 3);
+      }
+    }
+  });
+  it('el polvo interior queda dentro y lo que se desprende es una fracción pequeña', () => {
+    const c = cloud(5, 9000);
+    let out = 0;
+    for (let i = 0; i < c.n; i++) {
+      const len0 = Math.hypot(c.pos[i * 3]!, c.pos[i * 3 + 1]!, c.pos[i * 3 + 2]!);
+      if (c.rand[i * 4 + 1]! > 0.5) out++; else expect(len0).toBeLessThanOrEqual(1.0001);
+    }
+    expect(out / c.n).toBeLessThan(0.025);
+  });
+});

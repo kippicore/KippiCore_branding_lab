@@ -11,4 +11,5 @@ export const DYNAMIC_ATMOSPHERES: Partial<Record<AtmosphereId, DynamicLayerFacto
   A17: { id: 'A17', tech: 'webgl', cycleMs: 40000, usesPointer: false, load: () => import('./A17-cortina/dynamic') },
   A18: { id: 'A18', tech: 'webgl', cycleMs: 50000, usesPointer: false, load: () => import('./A18-resplandor/dynamic') },
   A19: { id: 'A19', tech: 'webgl', cycleMs: 90000, usesPointer: true, load: () => import('./A19-esfera/dynamic') },
+  A20: { id: 'A20', tech: 'webgl', cycleMs: 90000, usesPointer: true, load: () => import('./A20-ecosistema/dynamic') },
 };

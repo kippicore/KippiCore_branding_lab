@@ -54,4 +54,7 @@ export const ATMOSPHERE_META: readonly AtmosphereMeta[] = [
   { id: 'A19', name: 'Esfera de partículas', subtitle: 'Orbe', reg: null, weight: 0.25, description: 'Una esfera hecha de polvo de luz con borde brillante y filamentos que giran por dentro. Centro natural para el logo.',
     staticRecipe: 'bgDeep · esfera de puntos glow con luz de borde (rim) en un lado y filamentos glow2.',
     dynamicNote: 'La esfera gira despacio, los filamentos fluyen por su superficie y el rim respira (≈30 s).' },
+  { id: 'A20', name: 'Ecosistema', subtitle: 'Clientes en órbita', reg: null, weight: 0.2, description: 'La esfera de partículas rodeada de células translúcidas: cada una es un cliente de KippiCore (panaderías, conjuntos, comercios). Algunas se señalan con un rótulo hexagonal y su nombre.',
+    staticRecipe: 'bgDeep · esfera de puntos glow · células con burbuja, núcleo glow/glow2 y estelas · rótulos hexagonales con línea guía (nombres en src/data/clients.ts).',
+    dynamicNote: 'Las células orbitan la esfera, algunas salen disparadas hacia la cámara con estela y los rótulos de clientes entran y salen cada ≈45 s.' },
 ];

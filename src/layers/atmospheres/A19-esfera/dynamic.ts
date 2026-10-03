@@ -17,7 +17,19 @@ const SPRING_W = 2.2;      // rad/s: el orbe sigue al puntero con inercia lenta
 
 const rgb = (h: Hex): number[] => [...hexToRgb01(h)];
 
-class Esfera implements DynamicLayerInstance {
+export interface SphereGeom { cx: number; cy: number; R: number }
+/** Cuadro que recibe la capa 2D que se pinta encima de la esfera (A20: células y rótulos). */
+export interface OverlayFrame { t: number; size: Size; geom: SphereGeom; colors: readonly Hex[]; dark: number; tilt: readonly [number, number] }
+export interface SphereOverlay {
+  readonly canvas: HTMLCanvasElement | null;
+  mount(host: HTMLElement): void;
+  resize(size: Size, dpr: number): void;
+  draw(f: OverlayFrame): void;
+  dispose(): void;
+}
+export interface SphereOptions { layout: (s: Size) => SphereGeom; overlay?: SphereOverlay; n?: number }
+
+export class Esfera implements DynamicLayerInstance {
   private tween: ThemeTween;
   private colors: readonly Hex[];
   private waves: Waves;
@@ -37,7 +49,7 @@ class Esfera implements DynamicLayerInstance {
   private haloProgram: Program | null = null;
   private lightMode = -1;
 
-  constructor(init: DynamicInit) {
+  constructor(init: DynamicInit, private opts: SphereOptions = { layout }) {
     this.tween = new ThemeTween(init.theme);
     this.colors = sphereColors(init.theme);
     this.seed = init.seed;
@@ -69,6 +81,7 @@ class Esfera implements DynamicLayerInstance {
     });
     this.buildPoints();
     this.pushColors();
+    this.opts.overlay?.mount(host);
   }
   resize(size: Size, dpr: number): void {
     this.size = size;
@@ -77,6 +90,7 @@ class Esfera implements DynamicLayerInstance {
     this.renderer.dpr = dpr;
     this.renderer.setSize(Math.max(1, Math.round(size.w)), Math.max(1, Math.round(size.h)));
     if (this.canvas) { this.canvas.style.width = '100%'; this.canvas.style.height = '100%'; }
+    this.opts.overlay?.resize(size, dpr);
     this.draw();
   }
   setTheme(theme: Theme, ms: number): void {
@@ -102,10 +116,21 @@ class Esfera implements DynamicLayerInstance {
   capture(): Promise<CanvasImageSource> {
     if (!this.renderer || !this.canvas) return Promise.reject(new Error('A19: sin superficie'));
     this.draw();
-    return createImageBitmap(this.canvas, { resizeWidth: Math.max(1, Math.round(this.size.w)), resizeHeight: Math.max(1, Math.round(this.size.h)) });
+    const w = Math.max(1, Math.round(this.size.w)), h = Math.max(1, Math.round(this.size.h));
+    const over = this.opts.overlay?.canvas;
+    if (!over) return createImageBitmap(this.canvas, { resizeWidth: w, resizeHeight: h });
+    const flat = document.createElement('canvas');      // esfera + capa 2D en una sola imagen (para el medidor)
+    flat.width = w; flat.height = h;
+    const ctx = flat.getContext('2d');
+    if (!ctx) return Promise.reject(new Error('A19: sin 2D'));
+    ctx.drawImage(this.canvas, 0, 0, w, h);
+    ctx.globalCompositeOperation = this.tween.dark >= 0.5 ? 'screen' : 'multiply';
+    ctx.drawImage(over, 0, 0, w, h);
+    return createImageBitmap(flat);
   }
   dispose(): void {
     if (!this.renderer) return;
+    this.opts.overlay?.dispose();
     this.renderer.gl.getExtension('WEBGL_lose_context')?.loseContext();
     this.canvas?.remove();
     this.renderer = null; this.canvas = null; this.halo = null; this.points = null;
@@ -115,7 +140,7 @@ class Esfera implements DynamicLayerInstance {
   private buildPoints(): void {
     if (!this.renderer || !this.pointsProgram) return;
     const gl = this.renderer.gl;
-    const n = Math.max(500, Math.round(N_DYNAMIC * Math.min(1.5, Math.max(0.5, this.density))));
+    const n = Math.max(500, Math.round((this.opts.n ?? N_DYNAMIC) * Math.min(1.5, Math.max(0.5, this.density))));
     const c = cloud(this.seed, n);
     this.points?.geometry.remove();
     const geometry = new Geometry(gl, { position: { size: 3, data: c.pos }, aRand: { size: 4, data: c.rand } });
@@ -136,7 +161,7 @@ class Esfera implements DynamicLayerInstance {
     if (!r || !hp || !pp || !this.halo || !this.points || !this.canvas) return;
     const gl = r.gl;
     const k = this.canvas.width / Math.max(1, this.size.w);
-    const { cx, cy, R } = layout(this.size);
+    const geom = this.opts.layout(this.size), { cx, cy, R } = geom;
     const t = this.tMs / 1000;
     const b = breath(t);
     const light = this.tween.dark < 0.5 ? 1 : 0;
@@ -153,7 +178,8 @@ class Esfera implements DynamicLayerInstance {
     u.uTilt!.value = [this.sx.x, this.sy.x];
     r.render({ scene: this.halo });
     r.render({ scene: this.points, clear: false });
+    this.opts.overlay?.draw({ t, size: this.size, geom, colors: this.colors, dark: this.tween.dark, tilt: [this.sx.x, this.sy.x] });
   }
 }
 
-export const create = (init: DynamicInit): DynamicLayerInstance => new Esfera(init);
+export const create = (init: DynamicInit): DynamicLayerInstance => new Esfera(init, { layout });

@@ -41,14 +41,15 @@ void main() {
   float spin = 0.0, fil = 0.0, ej = 0.0;
   if (ejecta) {
     float u = fract(t / 18.0 + aRand.z);
-    p = p / len0 * (1.0 + u * (0.45 + 0.7 * aRand.x));
+    p = p / len0 * (1.0 + u * (0.3 + 0.45 * aRand.x));
     spin = -u * 0.35;
-    ej = smoothstep(0.0, 0.12, u) * pow(1.0 - u, 1.6) * 0.85;
+    ej = smoothstep(0.0, 0.12, u) * pow(1.0 - u, 1.6) * 0.6;
   } else {
     float f = field(p, t);
     fil = exp(-f * f * 45.0);
-    p *= 1.0 + 0.06 * f + 0.04 * fil * uBreath;
-    p += 0.012 * vec3(sin(t * 2.0 * W1 + aRand.z * TAU), cos(t * 3.0 * W0 + aRand.w * TAU), sin(t * W1 + (aRand.z + aRand.w) * TAU));
+    // Solo brillo: el relieve no desplaza puntos; el temblor es tangencial (la cáscara sigue siendo una esfera exacta).
+    vec3 j = 0.012 * vec3(sin(t * 2.0 * W1 + aRand.z * TAU), cos(t * 3.0 * W0 + aRand.w * TAU), sin(t * W1 + (aRand.z + aRand.w) * TAU));
+    p += j - p * dot(j, p) / max(dot(p, p), 1e-4);
   }
   p = rotY(p, TAU * t / 90.0 + spin);
   p = rotZ(p, 0.38);

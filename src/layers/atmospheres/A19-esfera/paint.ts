@@ -5,9 +5,10 @@ import { fillBase, withBlur } from '../../shared/canvas';
 import { BG, dots, layerColor, rimExpr } from './static';
 import { layout, LIGHT } from './sphere';
 
-export const paint = async (ctx: CanvasRenderingContext2D, theme: Theme, size: Size, opts: StaticOpts & { tMs?: number }): Promise<void> => {
+/** La esfera completa (fondo, halo, rim y puntos) en el encuadre `geom`; A20 la reutiliza con el suyo. */
+export const paintSphere = (ctx: CanvasRenderingContext2D, theme: Theme, size: Size, opts: StaticOpts, geom: { cx: number; cy: number; R: number }): void => {
   fillBase(ctx, theme, size, BG);
-  const { cx, cy, R } = layout(size);
+  const { cx, cy, R } = geom;
   const blend = theme.derived.blendMode as GlobalCompositeOperation;
   ctx.save();
   ctx.globalCompositeOperation = blend;
@@ -38,4 +39,8 @@ export const paint = async (ctx: CanvasRenderingContext2D, theme: Theme, size: S
     ctx.fill();
   }
   ctx.restore();
+};
+
+export const paint = async (ctx: CanvasRenderingContext2D, theme: Theme, size: Size, opts: StaticOpts & { tMs?: number }): Promise<void> => {
+  paintSphere(ctx, theme, size, opts, layout(size));
 };

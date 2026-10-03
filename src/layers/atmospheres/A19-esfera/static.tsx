@@ -42,47 +42,51 @@ export const dots = (seed: number): DotBucket[] => {
 
 const pathOf = (b: DotBucket): string => b.pts.map(([x, y]) => `M${x} ${y}h0`).join('');
 
-const box: CSSProperties = {
-  position: 'absolute', left: LAYOUT_CSS.left, top: LAYOUT_CSS.top, width: `${VIEW * LAYOUT_CSS.R}cqmin`,
-  height: `${VIEW * LAYOUT_CSS.R}cqmin`, transform: 'translate(-50%, -50%)', pointerEvents: 'none',
-};
 const blend: CSSProperties = { mixBlendMode: 'var(--kc-blend)' as CSSProperties['mixBlendMode'] };
 
-export const renderStatic = (theme: Theme, opts: StaticOpts): ReactNode => {
+export interface SphereCss { left: string; top: string; R: number }
+/** La esfera como SVG (halo, interior, rim y puntos). A20 la reutiliza con otro encuadre y otro prefijo de ids. */
+export const sphereSvg = (theme: Theme, seed: number, at: SphereCss = LAYOUT_CSS, idp = 'kc-a19'): ReactNode => {
   const h = VIEW / 2;
   const [lx, ly] = LIGHT;
+  const box: CSSProperties = {
+    position: 'absolute', left: at.left, top: at.top, width: `${VIEW * at.R}cqmin`,
+    height: `${VIEW * at.R}cqmin`, transform: 'translate(-50%, -50%)', pointerEvents: 'none',
+  };
   return (
-    <Root id={ID} bg={BG} style={{ containerType: 'size' }}>
-      <svg data-kc-sphere viewBox={`${-h} ${-h} ${VIEW} ${VIEW}`} style={box} aria-hidden="true">
-        <defs>
-          <radialGradient id="kc-a19-halo" cx="0" cy="0" r="2.1" gradientUnits="userSpaceOnUse">
-            <stop offset="0.26" stopColor={exprToCss('glowMix')} stopOpacity="0.22" />
-            <stop offset="1" stopColor={exprToCss('glowMix')} stopOpacity="0" />
-          </radialGradient>
-          <radialGradient id="kc-a19-in" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse">
-            <stop offset="0" stopColor={exprToCss('glow2')} stopOpacity="0.12" />
-            <stop offset="1" stopColor={exprToCss('glow2')} stopOpacity="0" />
-          </radialGradient>
-          <linearGradient id="kc-a19-rim" x1={-lx} y1={ly} x2={lx} y2={-ly} gradientUnits="userSpaceOnUse">
-            <stop offset="0.2" stopColor={exprToCss(rimExpr(theme.mode))} stopOpacity="0.12" />
-            <stop offset="1" stopColor={exprToCss(rimExpr(theme.mode))} stopOpacity="1" />
-          </linearGradient>
-          <filter id="kc-a19-b1" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="0.035" /></filter>
-          <filter id="kc-a19-b2" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="0.16" /></filter>
-        </defs>
-        <circle r="2.1" fill="url(#kc-a19-halo)" style={blend} />
-        <circle r="1" fill="url(#kc-a19-in)" style={blend} />
-        <circle r="1.05" fill="none" stroke="url(#kc-a19-rim)" strokeWidth="0.3" opacity="0.16" filter="url(#kc-a19-b2)" style={blend} />
-        <circle r="1.03" fill="none" stroke="url(#kc-a19-rim)" strokeWidth="0.07" opacity="0.3" filter="url(#kc-a19-b1)" style={blend} />
-        <g fill="none" strokeLinecap="round" style={blend}>
-          {dots(opts.seed).map((b, i) => (
-            <path key={i} d={pathOf(b)} stroke={exprToCss(layerColor(b.layer, theme.mode))} strokeWidth={b.r * 2} opacity={b.alpha} />
-          ))}
-        </g>
-      </svg>
-    </Root>
+    <svg data-kc-sphere viewBox={`${-h} ${-h} ${VIEW} ${VIEW}`} style={box} aria-hidden="true">
+      <defs>
+        <radialGradient id={`${idp}-halo`} cx="0" cy="0" r="2.1" gradientUnits="userSpaceOnUse">
+          <stop offset="0.26" stopColor={exprToCss('glowMix')} stopOpacity="0.22" />
+          <stop offset="1" stopColor={exprToCss('glowMix')} stopOpacity="0" />
+        </radialGradient>
+        <radialGradient id={`${idp}-in`} cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stopColor={exprToCss('glow2')} stopOpacity="0.12" />
+          <stop offset="1" stopColor={exprToCss('glow2')} stopOpacity="0" />
+        </radialGradient>
+        <linearGradient id={`${idp}-rim`} x1={-lx} y1={ly} x2={lx} y2={-ly} gradientUnits="userSpaceOnUse">
+          <stop offset="0.2" stopColor={exprToCss(rimExpr(theme.mode))} stopOpacity="0.12" />
+          <stop offset="1" stopColor={exprToCss(rimExpr(theme.mode))} stopOpacity="1" />
+        </linearGradient>
+        <filter id={`${idp}-b1`} x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="0.035" /></filter>
+        <filter id={`${idp}-b2`} x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="0.16" /></filter>
+      </defs>
+      <circle r="2.1" fill={`url(#${idp}-halo)`} style={blend} />
+      <circle r="1" fill={`url(#${idp}-in)`} style={blend} />
+      <circle r="1.05" fill="none" stroke={`url(#${idp}-rim)`} strokeWidth="0.3" opacity="0.16" filter={`url(#${idp}-b2)`} style={blend} />
+      <circle r="1.03" fill="none" stroke={`url(#${idp}-rim)`} strokeWidth="0.07" opacity="0.3" filter={`url(#${idp}-b1)`} style={blend} />
+      <g fill="none" strokeLinecap="round" style={blend}>
+        {dots(seed).map((b, i) => (
+          <path key={i} d={pathOf(b)} stroke={exprToCss(layerColor(b.layer, theme.mode))} strokeWidth={b.r * 2} opacity={b.alpha} />
+        ))}
+      </g>
+    </svg>
   );
 };
+
+export const renderStatic = (theme: Theme, opts: StaticOpts): ReactNode => (
+  <Root id={ID} bg={BG} style={{ containerType: 'size' }}>{sphereSvg(theme, opts.seed)}</Root>
+);
 
 export const css = (): string => rootCss(ID, BG).replace('isolation: isolate;', 'isolation: isolate;\n  container-type: size;') +
   `\n.kc-atm--${ID} [data-kc-sphere] {\n  position: absolute;\n  left: ${LAYOUT_CSS.left};\n  top: ${LAYOUT_CSS.top};\n` +
