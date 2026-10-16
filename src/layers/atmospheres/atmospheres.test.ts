@@ -22,11 +22,11 @@ const rgbOf = (c: string): string | null => {
 const colorSet = (list: string[]) => new Set(list.map(rgbOf).filter((x): x is string => !!x).filter((x) => x !== 'FFFFFF' && x !== '000000'));
 
 describe('registro', () => {
-  it('17 atmósferas, ids únicos, peso de la spec', () => {
-    expect(ATMOSPHERES).toHaveLength(17);
-    expect(new Set(ATMOSPHERES.map((a) => a.id)).size).toBe(17);
+  it('11 atmósferas, ids únicos, peso de la spec', () => {
+    expect(ATMOSPHERES).toHaveLength(11);
+    expect(new Set(ATMOSPHERES.map((a) => a.id)).size).toBe(11);
     expect(ATMOSPHERES.map((a) => a.weight)).toEqual(ATMOSPHERE_META.map((m) => m.weight));
-    expect(ATMOSPHERES.map((a) => a.weight)).toEqual([0.35, 0.7, 0.6, 0.3, 0.25, 0.5, 0.6, 0.25, 0.55, 0.55, 0.5, 0.3, 0.2, 0.3, 0.3, 0.25, 0.2]);
+    expect(ATMOSPHERES.map((a) => a.weight)).toEqual([0.35, 0.7, 0.6, 0.3, 0.25, 0.6, 0.25, 0.2, 0.3, 0.25, 0.2]);
     for (const a of ATMOSPHERES) expect(a.staticCss().length).toBeGreaterThan(20);
   });
 });

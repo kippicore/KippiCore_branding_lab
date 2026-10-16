@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { PALETTES } from '../data/palettes';
 import { TYPE_SYSTEMS } from '../data/typography';
-import type { Hex, Mode } from '../contracts';
+import type { Hex, Mode, Palette, PaletteId } from '../contracts';
 import { contrastRatio } from './contrast';
 import { hexToOklch, oklchToHex } from './oklch';
 import { mix } from './color';
@@ -25,9 +25,9 @@ describe('contraste', () => {
   });
   // Excepciones documentadas (no se cambia el dato); se informan en el informe de P1.
   const EXC_INK: string[] = [];
-  const EXC_MUTED: string[] = ['C08:light']; // 5.38 < 5.4 (dato de la spec, no se modifica)
-  it('8 paletas × 2 modos: ink/bg ≥ 13 y muted/bg ≥ 5.4', () => {
-    expect(PALETTES).toHaveLength(8);
+  const EXC_MUTED: string[] = [];
+  it('paleta × 2 modos: ink/bg ≥ 13 y muted/bg ≥ 5.4', () => {
+    expect(PALETTES).toHaveLength(1);
     const bad: string[] = [];
     for (const p of PALETTES) for (const m of MODES) {
       const r = m === 'dark' ? p.dark : p.light;
@@ -41,8 +41,16 @@ describe('contraste', () => {
 
 describe('derive', () => {
   const byId = (id: string) => PALETTES.find((p) => p.id === id)!;
-  it('accentIsFillOnly en claro para C11, C18', () => {
-    for (const id of ['C11', 'C18']) expect(deriveTheme(byId(id), 'light').derived.accentIsFillOnly).toBe(true);
+  // Paletas retiradas del laboratorio, conservadas aquí como datos de prueba del motor (el id es nominal).
+  const fx = (id: string, name: string, light: Palette['light'], dark: Palette['dark']): Palette => ({ id: id as PaletteId, name, reg: 50, concept: '', risk: '', light, dark });
+  const TINTA = fx('C11', 'Tinta & Maíz', { bg: '#FAFAF7', surface: '#FFFFFF', ink: '#0B0B0C', muted: '#5A5A5E', primary: '#0B0B0C', accent: '#F2C230' },
+    { bg: '#0E0E10', surface: '#18181B', ink: '#F4F4F0', muted: '#A1A1A6', primary: '#F4F4F0', accent: '#F7CE4A' });
+  const PIZARRA = fx('C18', 'Pizarra & Lavanda', { bg: '#F3F3F6', surface: '#FFFFFF', ink: '#181A26', muted: '#5C5F72', primary: '#3B3F5C', accent: '#8C7BDB' },
+    { bg: '#101118', surface: '#1A1B26', ink: '#EBEBF3', muted: '#A4A6BA', primary: '#B9BCE0', accent: '#B4A6FF' });
+  const ARCILLA = fx('C08', 'Arcilla', { bg: '#F3EDE4', surface: '#FBF8F3', ink: '#2A1E19', muted: '#6E5D53', primary: '#A4472A', accent: '#4A5A57' },
+    { bg: '#17110E', surface: '#221915', ink: '#F0E6DB', muted: '#B8A597', primary: '#E58A68', accent: '#9DB3AE' });
+  it('accentIsFillOnly en claro cuando el acento no sostiene texto (Tinta & Maíz, Pizarra & Lavanda)', () => {
+    for (const p of [TINTA, PIZARRA]) expect(deriveTheme(p, 'light').derived.accentIsFillOnly).toBe(true);
   });
   it('coral (C05 claro) lleva tinta sobre primario', () => {
     const t = deriveTheme(byId('C05'), 'light');
@@ -59,7 +67,7 @@ describe('derive', () => {
     }
   });
   it('memoiza y lerpTheme interpola', () => {
-    const a = deriveTheme(byId('C05'), 'light'), b = deriveTheme(byId('C08'), 'dark');
+    const a = deriveTheme(byId('C05'), 'light'), b = deriveTheme(ARCILLA, 'dark');
     expect(deriveTheme(byId('C05'), 'light')).toBe(a);
     expect(lerpTheme(a, b, 0)).toBe(a);
     expect(lerpTheme(a, b, 1)).toBe(b);
@@ -72,9 +80,9 @@ describe('oklch y mix', () => {
     const [L, C, h] = hexToOklch('#FF0000');
     expect(L).toBeCloseTo(0.628, 2); expect(C).toBeCloseTo(0.258, 2); expect(h).toBeCloseTo(29.2, 0);
   });
-  it('ida y vuelta de las 96 cifras (≤ 1/255 por canal)', () => {
+  it('ida y vuelta de las cifras de la paleta (≤ 1/255 por canal)', () => {
     const all: Hex[] = PALETTES.flatMap((p) => [...Object.values(p.light), ...Object.values(p.dark)]);
-    expect(all).toHaveLength(96);
+    expect(all).toHaveLength(12);
     for (const h of all) {
       const [l, c, hu] = hexToOklch(h);
       const back = oklchToHex(l, c, hu);
@@ -112,7 +120,7 @@ describe('prng e imageops', () => {
 describe('toCssVars y tipografías', () => {
   it('claves completas y sin undefined', () => {
     const t = deriveTheme(PALETTES[0]!, 'dark');
-    const v = toCssVars(t, TYPE_SYSTEMS[8]);
+    const v = toCssVars(t, TYPE_SYSTEMS[0]);
     const need = ['bg', 'surface', 'ink', 'muted', 'primary', 'accent', 'on-primary', 'on-accent', 'accent-text', 'glow', 'glow-2', 'glow-mix',
       'ambient', 'bg-deep', 'smoke-base', 'on-smoke', 'muted-on-smoke', 'blend', 'mode', 'font-display', 'font-text', 'font-mono', 'font-accent',
       'display-weight', 'display-tracking', 'display-scale', 'display-transform', 'label-tracking',
@@ -121,16 +129,15 @@ describe('toCssVars y tipografías', () => {
     expect(Object.values(v).every((x) => x !== undefined)).toBe(true);
     expect(t.cssVars['--kc-bg']).toBe(t.roles.bg);
   });
-  it('familias dentro de googleFontsQuery; T14 correcta', () => {
-    expect(TYPE_SYSTEMS).toHaveLength(9);
+  it('familias dentro de googleFontsQuery; T00 correcta', () => {
+    expect(TYPE_SYSTEMS.map((s) => s.id)).toEqual(['T00']);
     for (const s of TYPE_SYSTEMS) {
       const q = s.googleFontsQuery.replace(/\+/g, ' ');
       for (const r of [s.display, s.text, s.mono, s.accent]) if (r) expect(q, `${s.id} ${r.family}`).toContain(`family=${r.family}`);
     }
-    const t14 = TYPE_SYSTEMS.find((s) => s.id === 'T14')!;
-    expect(t14.display.family).toBe('Archivo');
-    expect(t14.display.headingWeight).toBe(800);
-    expect(t14.display.tracking).toBe('-0.035em');
-    expect(t14.reg).toBe(40);
+    const t00 = TYPE_SYSTEMS[0]!;
+    expect(t00.display.family).toBe('Geist');
+    expect(t00.display.headingWeight).toBe(700);
+    expect(t00.display.tracking).toBe('-0.035em');
   });
 });

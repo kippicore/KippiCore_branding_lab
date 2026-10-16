@@ -2,33 +2,5 @@
  "C05": {
   "concept": "Coral eléctrico y turquesa sobre marfil. Energía, cercanía y recordación; ideal para demos de pyme, redes y eventos.",
   "risk": "El coral no soporta texto blanco: el texto sobre coral va en tinta. Pierde credibilidad frente a un comprador de ERP."
- },
- "C08": {
-  "concept": "Terracota de Barichara, cal y pizarra. Artesanal y humano: la idea de software hecho a la medida, a mano.",
-  "risk": "Puede parecer arquitectura o decoración; necesita una tipografía técnica que lo ancle a tecnología."
- },
- "C09": {
-  "concept": "El azul de Prusia de los planos técnicos, el papel y el rojo del lápiz de corrección. Es azul, pero un azul con historia; pareja natural de la textura Plano técnico.",
-  "risk": "Sigue siendo azul: la diferencia la cargan el rojo y la textura. Sin ellos se pierde en el mar azul."
- },
- "C11": {
-  "concept": "Blanco y negro casi absolutos con un solo amarillo maíz que actúa como resaltador. El sistema más disciplinado: todo el carácter lo carga la tipografía.",
-  "risk": "Amarillo con negro es el código de precaución; el amarillo tiene que ser escaso y nunca de fondo completo."
- },
- "C15": {
-  "concept": "Vino tinto y azul acero sobre hueso: tradición, criterio y peso institucional, con un toque frío que lo ancla a la tecnología.",
-  "risk": "El borgoña puede leerse como bodega de vinos, firma de abogados o universidad privada."
- },
- "C18": {
-  "concept": "Gris pizarra con un lavanda suave: calma, orden y algo de imaginación. Poco común en el software colombiano.",
-  "risk": "El lavanda no se lee bien como texto sobre claro: úsalo como relleno."
- },
- "C20": {
-  "concept": "Un verde abismal casi negro con cian y violeta luminosos, como organismos que brillan en la oscuridad. Pensada sobre todo para el modo oscuro y las texturas futuristas.",
-  "risk": "En modo claro pierde la mitad de su efecto; el neón cansa si aparece en todo."
- },
- "C22": {
-  "concept": "Grises metálicos fríos y un cian eléctrico: precisión de máquina, superficies de aluminio. La más futurista de las paletas sobrias.",
-  "risk": "Fría e impersonal; la cercanía tendría que venir del lenguaje y de la textura."
  }
 }

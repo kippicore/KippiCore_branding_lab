@@ -3,8 +3,7 @@ export type Mode = 'light' | 'dark';
 export type RoleKey = 'bg' | 'surface' | 'ink' | 'muted' | 'primary' | 'accent';
 export type Roles = Readonly<Record<RoleKey, Hex>>;
 
-export type PaletteId =
-  | 'C05' | 'C08' | 'C09' | 'C11' | 'C15' | 'C18' | 'C20' | 'C22';
+export type PaletteId = 'C05';
 
 export interface Palette {
   readonly id: PaletteId;

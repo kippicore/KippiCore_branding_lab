@@ -4,7 +4,7 @@ exports[`export de tokens > toCssFile: roles con los hex de la spec, fuentes y s
 "/*
  * KippiCore · C05 · T00 · A01 · G01 · claro
  * Caribe eléctrico / Geist · base recomendada / Aurora / Esmerilado
- * Reproducir: /?c=C05&m=light
+ * Reproducir: /?m=light
  * Roles: bg #FBF8F3 · surface #FFFFFF · ink #10131A · muted #5B6070 · primary #FF5A3C · accent #007479
  */
 @import url('https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap');

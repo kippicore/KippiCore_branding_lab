@@ -15,14 +15,16 @@ import { Ficha, resolveFicha } from '../Ficha/Ficha';
 import { CodeBar, fullCode } from '../Combinador/CodeBar';
 
 const S: LabState = { ...DEFAULT_STATE };
-const L: ShortcutLists = { types: ['T00', 'T02', 'T03'], palettes: ['C05', 'C08'], atmospheres: ['A01', 'A02'], glasses: ['G01', 'G02'] };
+const L: ShortcutLists = { types: ['T00'], palettes: ['C05'], atmospheres: ['A01', 'A02'], glasses: ['G01', 'G02'] };
 beforeEach(() => cleanup());
 
 describe('atajos', () => {
   it('cambian el estado correcto', () => {
-    expect(resolveShortcut('t', { ...S, type: 'T00' }, L)).toEqual({ patch: { type: 'T02' } });
-    expect(resolveShortcut('T', { ...S, type: 'T00' }, L)).toEqual({ patch: { type: 'T03' } });
-    expect(resolveShortcut('c', { ...S, palette: 'C08' }, L)).toEqual({ patch: { palette: 'C05' } });
+    expect(resolveShortcut('a', { ...S, atmosphere: 'A01' }, L)).toEqual({ patch: { atmosphere: 'A02', shuffle: false } });
+    expect(resolveShortcut('A', { ...S, atmosphere: 'A01' }, L)).toEqual({ patch: { atmosphere: 'A02', shuffle: false } });
+    expect(resolveShortcut('r', { ...S, shuffle: true }, L)).toEqual({ patch: { shuffle: false } });
+    expect(resolveShortcut('g', { ...S, glass: 'G02' }, L)).toEqual({ patch: { glass: 'G01' } });
+    expect(resolveShortcut('t', S, L)).toEqual({ patch: { type: 'T00' } });
     expect(resolveShortcut('m', { ...S, mode: 'dark' }, L)).toEqual({ patch: { mode: 'light' } });
     expect(resolveShortcut('d', { ...S, motion: 'dynamic' }, L)).toEqual({ patch: { motion: 'static' } });
     expect(resolveShortcut(']', { ...S, speed: 1 }, L)).toEqual({ patch: { speed: 1.25 } });
@@ -57,7 +59,7 @@ describe('filtro de registro', () => {
 describe('Ficha', () => {
   it('resuelve paletas y tipografías; ids inválidos dan null', () => {
     expect(resolveFicha('C05')?.kind).toBe('C');
-    expect(resolveFicha('T14')?.kind).toBe('T');
+    expect(resolveFicha('T00')?.kind).toBe('T');
     expect(resolveFicha('A99')).toBeNull();   // registro vacío en este test
     expect(resolveFicha('G01')).toBeNull();
     expect(resolveFicha('X01')).toBeNull();

@@ -7,7 +7,6 @@ import { TYPE_SYSTEMS } from '../data/typography';
 import { ATMOSPHERE_META } from '../data/atmospheres';
 import { GLASS_META } from '../data/glass';
 
-const pad = (n: number): string => String(n).padStart(2, '0');
 const randomState = (rnd: () => number): LabState => {
   const pick = <T,>(a: readonly T[]): T => a[Math.floor(rnd() * a.length)]!;
   return {
@@ -15,6 +14,7 @@ const randomState = (rnd: () => number): LabState => {
     palette: pick(PALETTES).id,
     type: pick(TYPE_SYSTEMS).id,
     atmosphere: pick(ATMOSPHERE_META).id,
+    shuffle: rnd() < 0.5,
     glass: pick(GLASS_META).id,
     mode: pick(['light', 'dark'] as const),
     motion: pick(['static', 'dynamic'] as const),
@@ -25,7 +25,7 @@ const randomState = (rnd: () => number): LabState => {
     seed: Math.floor(rnd() * 100000),
     gallery: pick(['T', 'C', 'A', 'G'] as const),
     reg: pick(['all', 'enterprise', 'equilibrio', 'pyme'] as const),
-    ficha: rnd() < 0.5 ? null : `A${pad(1 + Math.floor(rnd() * 14))}`,
+    ficha: rnd() < 0.5 ? null : pick(ATMOSPHERE_META).id,
   };
 };
 const env = { reducedMotion: false };
@@ -51,6 +51,6 @@ describe('url-state', () => {
     expect(parseState('?mv=d', { reducedMotion: true }).motion).toBe('dynamic');
   });
   it('comboCode', () => {
-    expect(comboCode(DEFAULT_STATE)).toBe('C20 · T00 · A01 · G01');
+    expect(comboCode(DEFAULT_STATE)).toBe('C05 · T00 · A01 · G01');
   });
 });

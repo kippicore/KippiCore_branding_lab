@@ -31,7 +31,7 @@ export function Galerias({ state, setState }: ViewProps): ReactNode {
         view: 'combinador',
         ...(k === 'T' ? { type: id as LabState['type'] } : {}),
         ...(k === 'C' ? { palette: id as LabState['palette'] } : {}),
-        ...(k === 'A' ? { atmosphere: id as LabState['atmosphere'] } : {}),
+        ...(k === 'A' ? { atmosphere: id as LabState['atmosphere'], shuffle: false } : {}),
         ...(k === 'G' ? { glass: id as LabState['glass'] } : {}),
       };
       setState(patch, { push: true });

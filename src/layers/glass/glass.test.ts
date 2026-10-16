@@ -17,9 +17,9 @@ const CSS: Record<string, string> = Object.fromEntries(readdirSync(dir).filter((
 const stripComments = (s: string): string => s.replace(/\/\*[\s\S]*?\*\//g, '');
 const isWhiteOrBlack = (c: string): boolean => /^rgba?\(\s*(255\s*,\s*255\s*,\s*255|0\s*,\s*0\s*,\s*0)\s*[,)]/.test(c.trim());
 
-describe('vidrios G01–G08', () => {
-  it('hay 10 vidrios con ids únicos y CSS no vacío', () => {
-    expect(GLASSES.map((g) => g.id)).toEqual(['G01', 'G02', 'G03', 'G04', 'G05', 'G06', 'G07', 'G08']);
+describe('vidrios G01, G02, G05, G06 y G08', () => {
+  it('hay 5 vidrios con ids únicos y CSS no vacío', () => {
+    expect(GLASSES.map((g) => g.id)).toEqual(['G01', 'G02', 'G05', 'G06', 'G08']);
     for (const g of GLASSES) { expect(CSS[g.id]).toContain(g.className); expect(CSS[g.id]).toContain('backdrop-filter'); }
   });
 
@@ -51,12 +51,6 @@ describe('vidrios G01–G08', () => {
       };
       const a = used(themeA), b = used(themeB);
       for (const c of a) expect(b.has(c), `${g.id} comparte ${c}`).toBe(false);
-    }
-    // G07 sí pinta colores de tema
-    for (const id of ['G07'] as const) {
-      const rec = createRecordingContext();
-      getGlass(id).model.paintOverlays?.(rec.ctx, themeA, rect, getGlass(id).defaults);
-      expect(rec.colorsUsed().some((c) => !isWhiteOrBlack(c))).toBe(true);
     }
   });
 

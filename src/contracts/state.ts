@@ -12,7 +12,8 @@ export interface LabState {
   readonly view: ViewId;
   readonly palette: PaletteId;      // c
   readonly type: TypeId;            // t
-  readonly atmosphere: AtmosphereId;// a
+  readonly atmosphere: AtmosphereId;// a (el fondo fijo; con shuffle activo rota entre todos)
+  readonly shuffle: boolean;        // sh = 0 lo apaga; por defecto los fondos rotan al azar
   readonly glass: GlassId;          // g
   readonly mode: Mode;              // m = light|dark
   readonly motion: Motion;          // mv = s|d

@@ -1,4 +1,4 @@
-export type TypeId = 'T00' | 'T02' | 'T03' | 'T06' | 'T07' | 'T09' | 'T10' | 'T11' | 'T14';
+export type TypeId = 'T00';
 
 export interface FontRole {
   readonly family: string;                 // nombre exacto en Google Fonts

@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState, type CSSProperties, type ReactNode, type Ref } from 'react';
 import type { LabState, LegibilityInput, Rect } from '../../contracts';
-import { AtmosphereView } from '../../runtime/AtmosphereView';
+import { CrossfadeAtmosphere } from '../../runtime/CrossfadeAtmosphere';
 import { TEMPLATES } from '../../templates';
 import { ThemeScope } from '../../theme/ThemeScope';
 import { ensureFonts } from '../../theme/fonts';
@@ -28,7 +28,7 @@ export function Stage({ state, resolved, size, stageRef }: StageProps): ReactNod
     <ThemeScope theme={theme} type={type} className={styles.scope}>
       <div ref={stageRef} className={styles.stage} style={style} data-kc-stage>
         {atmosphere ? (
-          <AtmosphereView atmosphere={atmosphere} theme={theme} seed={state.seed} motion={state.motion}
+          <CrossfadeAtmosphere atmosphere={atmosphere} theme={theme} seed={state.seed} motion={state.motion}
             params={{ speed: state.speed, density: 1, pointer: null }} />
         ) : (
           <div className={styles.stageBg} aria-hidden="true" />

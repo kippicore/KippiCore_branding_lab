@@ -107,7 +107,7 @@ export function Ficha({ state, setState }: ViewProps): ReactNode {
       view: 'combinador',
       ...(found.kind === 'C' ? { palette: found.item.id } : {}),
       ...(found.kind === 'T' ? { type: found.item.id } : {}),
-      ...(found.kind === 'A' ? { atmosphere: found.item.id } : {}),
+      ...(found.kind === 'A' ? { atmosphere: found.item.id, shuffle: false } : {}),
       ...(found.kind === 'G' ? { glass: found.item.id } : {}),
     };
     setState(patch, { push: true });

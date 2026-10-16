@@ -27,7 +27,7 @@ const COLOR = /#[0-9a-fA-F]{6}\b|#[0-9a-fA-F]{3}\b|rgba?\(|hsla?\(|oklch\(|\b(re
 const count = (s: string, re: RegExp): number => (s.match(re) ?? []).length;
 
 describe.each(['hero', 'order-card'] as const)('plantilla %s', (id) => {
-  for (const t of ['T00', 'T03', 'T14'] as const) {
+  for (const t of ['T00'] as const) {
     it(`marcado correcto con ${t}`, () => {
       const html = render(id, getTypeSystem(t));
       expect(html).not.toMatch(COLOR);
@@ -48,12 +48,12 @@ describe.each(['hero', 'order-card'] as const)('plantilla %s', (id) => {
 describe('hero', () => {
   it('el acento solo existe con rol accent y nunca contiene números', () => {
     expect(render('hero', getTypeSystem('T00'))).not.toContain('data-kc-accent');
-    for (const t of ['T14'] as const) {
-      const html = render('hero', getTypeSystem(t));
-      const m = /data-kc-accent[^>]*>([^<]*)</.exec(html);
-      expect(m?.[1]).toBe('celular');
-      expect(m?.[1]).not.toMatch(/\d/);
-    }
+    // Ninguna tipografía del laboratorio trae rol accent: se prueba con una sintética (T00 + acento).
+    const t00 = getTypeSystem('T00');
+    const withAccent = { ...t00, accent: { ...t00.text, use: 'prueba' } };
+    const m = /data-kc-accent[^>]*>([^<]*)</.exec(render('hero', withAccent));
+    expect(m?.[1]).toBe('celular');
+    expect(m?.[1]).not.toMatch(/\d/);
   });
   it('barra y tarjeta son vidrios hermanos, no anidados', () => {
     const html = render('hero', getTypeSystem('T00'));

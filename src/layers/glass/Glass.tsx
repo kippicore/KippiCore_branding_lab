@@ -3,11 +3,8 @@ import type { GlassLayer, GlassParams } from '../../contracts';
 import './glass-base.css';
 import './G01-esmerilado/glass.css';
 import './G02-liquido/glass.css';
-import './G03-acanalado/glass.css';
-import './G04-grano/glass.css';
 import './G05-ahumado/glass.css';
 import './G06-escarcha/glass.css';
-import './G07-dicroico/glass.css';
 import './G08-progresivo/glass.css';
 
 export interface GlassProps {

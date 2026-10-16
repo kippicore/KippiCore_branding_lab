@@ -1,9 +1,11 @@
-import type { ReactNode } from 'react';
+import { useMemo, type ReactNode } from 'react';
 import type { LabState, TemplateId } from '../../contracts';
 import { PALETTES } from '../../data/palettes';
 import { TYPE_SYSTEMS } from '../../data/typography';
 import { ATMOSPHERES } from '../../layers/atmospheres';
 import { GLASSES } from '../../layers/glass';
+import { ROTATION_MS } from '../../lib/rotation';
+import { useAtmosphereRotation } from '../../runtime/useAtmosphereRotation';
 import { LegibilityMeter } from '../../legibility/LegibilityMeter';
 import { useLegibility } from '../../legibility/useLegibility';
 import { TEMPLATES } from '../../templates';
@@ -36,7 +38,14 @@ function Segmented<T extends string>({ label, value, options, onChange }: {
   );
 }
 
-export function Combinador({ state, setState }: ViewProps): ReactNode {
+const ROTATE = 'rotate';
+
+export function Combinador({ state: picked, setState }: ViewProps): ReactNode {
+  // Con la rotación activa, el fondo «vivo» sustituye al elegido en todo lo que se ve, se mide y se exporta.
+  const rotating = picked.shuffle && picked.motion === 'dynamic';
+  const ids = useMemo(() => ATMOSPHERES.map((a) => a.id), []);
+  const rotation = useAtmosphereRotation(ids, rotating);
+  const state = rotating ? { ...picked, atmosphere: rotation.current } : picked;
   const resolved = useResolved(state);
   const reduced = useReducedMotion();
   const { ref, input } = useLegibilityInput(resolved, state);
@@ -44,7 +53,10 @@ export function Combinador({ state, setState }: ViewProps): ReactNode {
 
   const typeOpts: SelectorOption[] = TYPE_SYSTEMS.map((t) => ({ value: t.id, label: `${t.id} · ${t.name}` }));
   const palOpts: SelectorOption[] = PALETTES.map((p) => ({ value: p.id, label: `${p.id} · ${p.name}` }));
-  const atmOpts: SelectorOption[] = ATMOSPHERES.map((a) => ({ value: a.id, label: `${a.id} · ${a.name}${hasDynamic(a) ? ' · dinámica' : ''}` }));
+  const atmOpts: SelectorOption[] = [
+    { value: ROTATE, label: `Aleatoria · rota entre los ${ATMOSPHERES.length} fondos` },
+    ...ATMOSPHERES.map((a) => ({ value: a.id, label: `${a.id} · ${a.name}${hasDynamic(a) ? ' · dinámica' : ''}` })),
+  ];
   const glassOpts: SelectorOption[] = GLASSES.map((g) => ({ value: g.id, label: `${g.id} · ${g.name}` }));
   const glass = resolved?.glass;
   const veil = state.veil ?? glass?.defaults.veil ?? 50;
@@ -58,7 +70,15 @@ export function Combinador({ state, setState }: ViewProps): ReactNode {
       <aside className={styles.controls} aria-label="Controles de la combinación">
         <Selector label="Tipografía" value={state.type} options={typeOpts} reg={type.reg} onChange={(v) => setState({ type: v as LabState['type'] })} />
         <Selector label="Paleta" value={state.palette} options={palOpts} reg={palette.reg} onChange={(v) => setState({ palette: v as LabState['palette'] })} />
-        <Selector label="Atmósfera" value={state.atmosphere} options={atmOpts} reg={atmosphere ? atmosphere.reg : null} onChange={(v) => setState({ atmosphere: v as LabState['atmosphere'] })} />
+        <Selector label="Atmósfera" value={picked.shuffle ? ROTATE : picked.atmosphere} options={atmOpts} reg={atmosphere ? atmosphere.reg : null}
+          onChange={(v) => setState(v === ROTATE ? { shuffle: true } : { atmosphere: v as LabState['atmosphere'], shuffle: false })} />
+        {rotating && (
+          <div className={styles.field}>
+            <p className={styles.hint} role="status">Ahora: <strong>{atmosphere?.name}</strong> · cambia al azar cada {ROTATION_MS / 1000} s, sin repetir hasta pasar por todos.</p>
+            <button type="button" className="ui-btn" onClick={rotation.skip}>Siguiente fondo ›</button>
+          </div>
+        )}
+        {picked.shuffle && picked.motion === 'static' && <p className={styles.hint} role="status">La rotación de fondos solo corre en modo dinámico.</p>}
         <Selector label="Vidrio" value={state.glass} options={glassOpts} reg={glass ? glass.reg : null} onChange={(v) => setState({ glass: v as LabState['glass'] })} />
 
         <Segmented label="Modo" value={state.mode} onChange={(mode) => setState({ mode })}

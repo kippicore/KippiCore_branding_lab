@@ -25,7 +25,8 @@ const patchOf = <K extends keyof LabState>(key: K, v: LabState[K] | null): Short
 export const SHORTCUTS: readonly Shortcut[] = [
   { label: 't / T', description: 'Tipografía siguiente / anterior' },
   { label: 'c / C', description: 'Paleta siguiente / anterior' },
-  { label: 'a / A', description: 'Atmósfera siguiente / anterior' },
+  { label: 'a / A', description: 'Atmósfera siguiente / anterior (fija el fondo)' },
+  { label: 'r', description: 'Activar / desactivar la rotación aleatoria de fondos' },
   { label: 'g / G', description: 'Vidrio siguiente / anterior' },
   { label: 'm', description: 'Alternar claro / oscuro' },
   { label: 'd', description: 'Alternar estático / dinámico' },
@@ -47,7 +48,8 @@ export const resolveShortcut = (key: string, s: LabState, l: ShortcutLists): Sho
   switch (lower) {
     case 't': return patchOf('type', cycle(l.types, s.type, dir));
     case 'c': return patchOf('palette', cycle(l.palettes, s.palette, dir));
-    case 'a': return patchOf('atmosphere', cycle(l.atmospheres, s.atmosphere, dir));
+    case 'a': { const a = cycle(l.atmospheres, s.atmosphere, dir); return a === null ? null : { patch: { atmosphere: a, shuffle: false } }; }
+    case 'r': return { patch: { shuffle: !s.shuffle } };
     case 'g': return patchOf('glass', cycle(l.glasses, s.glass, dir));
     case 'm': return ({ patch: { mode: s.mode === 'dark' ? 'light' : 'dark' } });
     case 'd': return ({ patch: { motion: s.motion === 'dynamic' ? 'static' : 'dynamic' } });

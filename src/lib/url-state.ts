@@ -9,7 +9,7 @@ import { GLASS_META } from '../data/glass';
 
 /** Defaults: dirección D-D de la spec (plan §4.6). */
 export const DEFAULT_STATE: LabState = {
-  view: 'combinador', palette: 'C20', type: 'T00', atmosphere: 'A01', glass: 'G01', mode: 'dark',
+  view: 'combinador', palette: 'C05', type: 'T00', atmosphere: 'A01', shuffle: true, glass: 'G01', mode: 'dark',
   motion: 'dynamic', speed: 1, veil: null, blur: null, template: 'hero', seed: 1, gallery: 'T', reg: 'all', ficha: null,
 };
 
@@ -34,6 +34,7 @@ export function parseState(search: string, env: { reducedMotion: boolean }): Lab
     palette: oneOf<PaletteId>(q.get('c'), PALETTES.map((x) => x.id), d.palette),
     type: oneOf<TypeId>(q.get('t'), TYPE_SYSTEMS.map((x) => x.id), d.type),
     atmosphere: oneOf<AtmosphereId>(q.get('a'), ATMOSPHERE_META.map((x) => x.id), d.atmosphere),
+    shuffle: q.get('sh') === '0' ? false : d.shuffle,
     glass: oneOf<GlassId>(q.get('g'), GLASS_META.map((x) => x.id), d.glass),
     mode: oneOf<Mode>(q.get('m'), ['light', 'dark'], d.mode),
     motion,
@@ -59,6 +60,7 @@ export function serializeState(s: LabState): string {
   put('c', s.palette, d.palette);
   put('t', s.type, d.type);
   put('a', s.atmosphere, d.atmosphere);
+  put('sh', s.shuffle ? 1 : 0, 1);
   put('g', s.glass, d.glass);
   put('m', s.mode, d.mode);
   put('mv', s.motion === 'static' ? 's' : 'd', 'd');
